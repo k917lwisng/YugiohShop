@@ -1,17 +1,20 @@
-# Build output
-bin/
-obj/
-*.user
-*.suo
-.vs/
+# Yugioh Shop Management System
 
-# NuGet packages
-packages/
-*.nupkg
+## Giới thiệu
+Phần mềm quản lý cửa hàng bán thẻ bài Yugioh,
+hỗ trợ bán hàng, quản lý kho và xuất hóa đơn.
 
-# DB connection string (bảo mật)
-DbConfig.cs
+## Công nghệ sử dụng
+- Ngôn ngữ: C#
+- Framework: .NET 7, WinForms
+- Database: [SQL Server / SQLite / ...]
 
-# Ảnh sản phẩm nếu nặng (tuỳ)
-# images/
-# barcodes/
+## Tính năng chính
+- Quản lý sản phẩm & kho hàng
+- Xử lý giao dịch bán hàng
+- Xuất hóa đơn
+
+## Hướng dẫn cài đặt
+1. Clone repo
+2. Mở bằng Visual Studio
+3. Build & Run
