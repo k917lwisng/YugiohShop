@@ -33,7 +33,7 @@ namespace YugiohShop
         {
             SetupCartGrid();
             LoadSalesProducts();
-            LoadFilters();
+            LoadAllFilters();
             ResetCustomerInfo();
             UpdateCartSummary();
         }
@@ -82,6 +82,21 @@ namespace YugiohShop
                 HeaderText = "Sản phẩm",
                 DataPropertyName = "Name",
                 FillWeight = 40
+            });
+
+            dgvCart.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "VariantId",
+                DataPropertyName = "VariantId",
+                Visible = false
+            });
+
+            dgvCart.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Rarity",
+                HeaderText = "Độ hiếm",
+                DataPropertyName = "Rarity",
+                FillWeight = 20
             });
 
             dgvCart.Columns.Add(new DataGridViewTextBoxColumn
@@ -152,48 +167,98 @@ namespace YugiohShop
             }
         }
 
-        private void LoadFilters()
+        private void LoadAllFilters()
         {
+            // Category
             cbSalesCategoryFilter.Items.Clear();
-            cbSalesCategoryFilter.Items.AddRange(new[] { "Tất cả", "SingleCard", "Pack", "FullBox" });
+            cbSalesCategoryFilter.Items.Add("Tất cả");
+            cbSalesCategoryFilter.Items.Add("SingleCard");
+            cbSalesCategoryFilter.Items.Add("Pack");
+            cbSalesCategoryFilter.Items.Add("FullBox");
             cbSalesCategoryFilter.SelectedIndex = 0;
 
+            // Rarity
             cbRarityFilter.Items.Clear();
-            cbRarityFilter.Items.AddRange(new[] { "Tất cả", "Common", "Rare", "Super Rare", "Ultra Rare", "Secret Rare", "Prismatic Secret Rare" });
-            cbRarityFilter.SelectedIndex = -1;
+            cbRarityFilter.Items.Add("Tất cả");
+            cbRarityFilter.Items.Add("Common");
+            cbRarityFilter.Items.Add("Rare");
+            cbRarityFilter.Items.Add("Super Rare");
+            cbRarityFilter.Items.Add("Ultra Rare");
+            cbRarityFilter.Items.Add("Secret Rare");
+            cbRarityFilter.Items.Add("Prismatic Secret Rare");
+            cbRarityFilter.SelectedIndex = 0;
 
+            // Attribute
             cbAttributeFilter.Items.Clear();
-            cbAttributeFilter.Items.AddRange(new[] { "Tất cả", "DARK", "LIGHT", "FIRE", "WATER", "EARTH", "WIND", "DIVINE" });
-            cbAttributeFilter.SelectedIndex = -1;
+            cbAttributeFilter.Items.Add("Tất cả");
+            cbAttributeFilter.Items.Add("DARK");
+            cbAttributeFilter.Items.Add("LIGHT");
+            cbAttributeFilter.Items.Add("FIRE");
+            cbAttributeFilter.Items.Add("WATER");
+            cbAttributeFilter.Items.Add("EARTH");
+            cbAttributeFilter.Items.Add("WIND");
+            cbAttributeFilter.Items.Add("DIVINE");
+            cbAttributeFilter.SelectedIndex = 0;
 
+            // CardType
             cbCardTypeFilter.Items.Clear();
-            cbCardTypeFilter.Items.AddRange(new[] { "Tất cả", "Monster", "Spell", "Trap" });
-            cbCardTypeFilter.SelectedIndex = -1;
+            cbCardTypeFilter.Items.Add("Tất cả");
+            cbCardTypeFilter.Items.Add("Monster");
+            cbCardTypeFilter.Items.Add("Spell");
+            cbCardTypeFilter.Items.Add("Trap");
+            cbCardTypeFilter.SelectedIndex = 0;
         }
 
-        private void LoadSalesProducts(string keyword = "", string category = "Tất cả", string rarity = "Tất cả", string attribute = "Tất cả", string cardType = "Tất cả")
+        private void LoadSalesProducts(
+    string keyword = "",
+    string category = "Tất cả",
+    string rarity = "Tất cả",
+    string attribute = "Tất cả",
+    string cardType = "Tất cả")
         {
             try
             {
                 flpSalesProducts.Controls.Clear();
 
-                string sql = $@"
-            SELECT ProductId, Code, CardCode, Name, Category, SellPrice, CostPrice, Stock, ImagePath
-            FROM Products
-            WHERE IsActive = 1
-              AND Stock > 0
-              AND (Name LIKE N'%{keyword}%'
-                   OR CardCode LIKE '%{keyword}%')";
+                using var conn = new SqlConnection(DbConfig.ConnectionString);
+                conn.Open();
+
+                string sql = @"
+            SELECT DISTINCT
+                p.ProductId, p.Code, p.CardCode, p.Name, p.Category, p.ImagePath,
+                ISNULL(SUM(v.Stock), 0) AS TotalStock,
+                ISNULL(MIN(v.SellPrice), 0) AS MinPrice
+            FROM Products p
+            INNER JOIN ProductVariants v ON p.ProductId = v.ProductId
+            WHERE p.IsActive = 1
+            AND v.Stock > 0
+            AND (p.Name LIKE @keyword OR p.CardCode LIKE @keyword)";
 
                 if (category != "Tất cả")
-                {
-                    sql += $" AND Category = N'{category}'";
-                }
-                if (rarity != "Tất cả") sql += $" AND Rarity = N'{rarity}'";
-                if (attribute != "Tất cả") sql += $" AND Attribute = N'{attribute}'";
-                if (cardType != "Tất cả") sql += $" AND CardType = N'{cardType}'";
+                    sql += " AND p.Category = @category";
 
-                DataTable dt = DbHelper.Query(sql);
+                if (rarity != "Tất cả")
+                    sql += " AND v.Rarity = @rarity";
+
+                if (attribute != "Tất cả")
+                    sql += " AND p.Attribute = @attribute";
+
+                if (cardType != "Tất cả")
+                    sql += " AND p.CardType = @cardType";
+
+                sql += @" GROUP BY p.ProductId, p.Code, p.CardCode, p.Name, p.Category, p.ImagePath
+                  ORDER BY p.Name";
+
+                using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@keyword", $"%{keyword}%");
+
+                if (category != "Tất cả") cmd.Parameters.AddWithValue("@category", category);
+                if (rarity != "Tất cả") cmd.Parameters.AddWithValue("@rarity", rarity);
+                if (attribute != "Tất cả") cmd.Parameters.AddWithValue("@attribute", attribute);
+                if (cardType != "Tất cả") cmd.Parameters.AddWithValue("@cardType", cardType);
+
+                var dt = new DataTable();
+                new SqlDataAdapter(cmd).Fill(dt);
 
                 foreach (DataRow row in dt.Rows)
                 {
@@ -201,15 +266,14 @@ namespace YugiohShop
                     string code = row["Code"].ToString();
                     string cardCode = row["CardCode"].ToString();
                     string name = row["Name"].ToString();
-                    string cardCategory = row["Category"].ToString();
-                    decimal sellPrice = Convert.ToDecimal(row["SellPrice"]);
-                    decimal costPrice = Convert.ToDecimal(row["CostPrice"]);
-                    int stock = Convert.ToInt32(row["Stock"]);
+                    string cardCat = row["Category"].ToString();
+                    decimal minPrice = Convert.ToDecimal(row["MinPrice"]);
+                    int totalStock = Convert.ToInt32(row["TotalStock"]);
                     string imagePath = row["ImagePath"] == DBNull.Value ? "" : row["ImagePath"].ToString();
 
-                    flpSalesProducts.Controls.Add(CreateSalesProductCard(
-                        productId, code, cardCode, name, cardCategory, sellPrice, costPrice, stock, imagePath
-                    ));
+                    flpSalesProducts.Controls.Add(
+                        CreateSalesProductCard(productId, code, cardCode, name, cardCat, minPrice, totalStock, imagePath)
+                    );
                 }
             }
             catch (Exception ex)
@@ -219,15 +283,8 @@ namespace YugiohShop
         }
 
         private Panel CreateSalesProductCard(
-    int productId,
-    string code,
-    string cardCode,
-    string name,
-    string category,
-    decimal sellPrice,
-    decimal costPrice,
-    int stock,
-    string imagePath)
+    int productId, string code, string cardCode, string name, string category,
+    decimal minPrice, int totalStock, string imagePath)
         {
             Panel card = new Panel();
             card.Width = 180;
@@ -235,17 +292,7 @@ namespace YugiohShop
             card.BorderStyle = BorderStyle.FixedSingle;
             card.Margin = new Padding(10);
             card.BackColor = Color.White;
-            card.Tag = new CartItem
-            {
-                ProductId = productId,
-                Code = code,
-                CardCode = cardCode,
-                Name = name,
-                SellPrice = sellPrice,
-                CostPrice = costPrice,
-                Quantity = 1,
-                Stock = stock
-            };
+            card.Tag = productId;
 
             PictureBox pic = new PictureBox();
             pic.Width = 160;
@@ -273,14 +320,14 @@ namespace YugiohShop
             lblCode.ForeColor = Color.DimGray;
 
             Label lblPrice = new Label();
-            lblPrice.Text = "Giá: " + sellPrice.ToString("N0") + " đ";
+            lblPrice.Text = "Từ: " + minPrice.ToString("N0") + " đ";
             lblPrice.Location = new Point(10, 218);
             lblPrice.Size = new Size(160, 20);
             lblPrice.ForeColor = Color.Red;
             lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
 
             Label lblStock = new Label();
-            lblStock.Text = "Tồn: " + stock;
+            lblStock.Text = "Tồn: " + totalStock + " (tất cả loại)";
             lblStock.Location = new Point(10, 240);
             lblStock.Size = new Size(160, 20);
 
@@ -304,20 +351,124 @@ namespace YugiohShop
         {
             Control c = sender as Control;
             Panel card = c is Panel ? (Panel)c : c.Parent as Panel;
-
             if (card == null) return;
 
-            CartItem item = card.Tag as CartItem;
-            if (item == null) return;
+            int productId = (int)card.Tag;
+            ShowVariantPicker(productId);
+        }
 
-            AddToCart(item, 1);
+        private void ShowVariantPicker(int productId)
+        {
+            try
+            {
+                using var conn = new SqlConnection(DbConfig.ConnectionString);
+                conn.Open();
+
+                string sql = @"
+            SELECT v.VariantId, v.Rarity, v.SellPrice, v.CostPrice, v.Stock,
+                   p.Name, p.Code, p.CardCode
+            FROM ProductVariants v
+            INNER JOIN Products p ON p.ProductId = v.ProductId
+            WHERE v.ProductId = @productId AND v.Stock > 0
+            ORDER BY v.SellPrice";
+
+                using var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@productId", productId);
+
+                var dt = new DataTable();
+                new SqlDataAdapter(cmd).Fill(dt);
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Sản phẩm này đã hết tất cả các loại!");
+                    return;
+                }
+
+                // Nếu chỉ có 1 variant → add thẳng không cần popup
+                if (dt.Rows.Count == 1)
+                {
+                    var r = dt.Rows[0];
+                    AddToCart(new CartItem
+                    {
+                        ProductId = productId,
+                        VariantId = Convert.ToInt32(r["VariantId"]),
+                        Rarity = r["Rarity"].ToString(),
+                        Name = r["Name"].ToString(),
+                        Code = r["Code"].ToString(),
+                        CardCode = r["CardCode"].ToString(),
+                        SellPrice = Convert.ToDecimal(r["SellPrice"]),
+                        CostPrice = Convert.ToDecimal(r["CostPrice"]),
+                        Stock = Convert.ToInt32(r["Stock"]),
+                        Quantity = 1
+                    }, 1);
+                    return;
+                }
+
+                // Nhiều variant → hiện popup chọn
+                using Form popup = new Form();
+                popup.Text = "Chọn độ hiếm";
+                popup.Size = new Size(360, 80 + dt.Rows.Count * 46);
+                popup.StartPosition = FormStartPosition.CenterParent;
+                popup.FormBorderStyle = FormBorderStyle.FixedDialog;
+                popup.MaximizeBox = false;
+
+                int y = 12;
+                foreach (DataRow row in dt.Rows)
+                {
+                    int variantId = Convert.ToInt32(row["VariantId"]);
+                    string rarity = row["Rarity"].ToString();
+                    decimal sellPrice = Convert.ToDecimal(row["SellPrice"]);
+                    decimal costPrice = Convert.ToDecimal(row["CostPrice"]);
+                    int stock = Convert.ToInt32(row["Stock"]);
+                    string name = row["Name"].ToString();
+                    string code = row["Code"].ToString();
+                    string cardCode = row["CardCode"].ToString();
+
+                    Button btn = new Button();
+                    btn.Text = $"{rarity}  —  {sellPrice:N0} đ  (Tồn: {stock})";
+                    btn.Location = new Point(12, y);
+                    btn.Size = new Size(320, 38);
+                    btn.Font = new Font("Segoe UI", 10);
+                    btn.FlatStyle = FlatStyle.Flat;
+                    btn.BackColor = Color.FromArgb(235, 242, 255);
+                    btn.ForeColor = Color.RoyalBlue;
+                    btn.FlatAppearance.BorderColor = Color.RoyalBlue;
+
+                    btn.Click += (s, ev) =>
+                    {
+                        AddToCart(new CartItem
+                        {
+                            ProductId = productId,
+                            VariantId = variantId,
+                            Rarity = rarity,
+                            Name = name,
+                            Code = code,
+                            CardCode = cardCode,
+                            SellPrice = sellPrice,
+                            CostPrice = costPrice,
+                            Stock = stock,
+                            Quantity = 1
+                        }, 1);
+                        popup.Close();
+                    };
+
+                    popup.Controls.Add(btn);
+                    y += 46;
+                }
+
+                popup.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi chọn variant: " + ex.Message);
+            }
         }
 
         private void AddToCart(CartItem product, int quantity)
         {
             if (quantity <= 0) return;
 
-            var existing = cart.FirstOrDefault(x => x.ProductId == product.ProductId);
+            var existing = cart.FirstOrDefault(x => x.VariantId == product.VariantId);
 
             if (existing != null)
             {
@@ -340,6 +491,8 @@ namespace YugiohShop
                 cart.Add(new CartItem
                 {
                     ProductId = product.ProductId,
+                    VariantId = product.VariantId,
+                    Rarity = product.Rarity,
                     Code = product.Code,
                     CardCode = product.CardCode,
                     Name = product.Name,
@@ -359,7 +512,9 @@ namespace YugiohShop
             dgvCart.DataSource = cart.Select(x => new
             {
                 x.ProductId,
+                x.VariantId,
                 x.Name,
+                x.Rarity,
                 x.SellPrice,
                 x.Quantity,
                 x.LineTotal
@@ -393,10 +548,10 @@ namespace YugiohShop
         {
             txtSearchSalesProduct.Text = "";
             cbSalesCategoryFilter.SelectedIndex = 0;
-            cbRarityFilter.SelectedIndex = -1;
-            cbAttributeFilter.SelectedIndex = -1;
-            cbCardTypeFilter.SelectedIndex = -1;
-            ApplySalesFilter();
+            cbRarityFilter.SelectedIndex = 0;
+            cbAttributeFilter.SelectedIndex = 0;
+            cbCardTypeFilter.SelectedIndex = 0;
+            LoadSalesProducts(); // reset về mặc định
         }
 
         private void btnIncreaseQty_Click(object sender, EventArgs e)
@@ -702,18 +857,18 @@ namespace YugiohShop
                     cmdDetail.ExecuteNonQuery();
 
                     string sqlStock = @"
-                                    UPDATE Products
+                                    UPDATE ProductVariants
                                     SET Stock = Stock - @Qty
-                                    WHERE ProductId = @ProductId AND Stock >= @Qty";
+                                    WHERE VariantId = @VariantId AND Stock >= @Qty";
 
                     using SqlCommand cmdStock = new SqlCommand(sqlStock, conn, tran);
                     cmdStock.Parameters.AddWithValue("@Qty", item.Quantity);
-                    cmdStock.Parameters.AddWithValue("@ProductId", item.ProductId);
+                    cmdStock.Parameters.AddWithValue("@VariantId", item.VariantId);  
 
                     int stockUpdated = cmdStock.ExecuteNonQuery();
                     if (stockUpdated == 0)
                     {
-                        throw new Exception("Có sản phẩm không đủ tồn kho khi thanh toán.");
+                        throw new Exception($"'{item.Name} - {item.Rarity}' không đủ tồn kho!");
                     }
                 }
 
@@ -882,8 +1037,8 @@ namespace YugiohShop
                     Stock = Convert.ToInt32(row["Stock"])
                 };
 
-                AddToCart(item, 1); // hàm này đã xử lý tăng qty nếu trùng
-                txtBarcodeInput.Focus(); // giữ focus để quét tiếp
+                AddToCart(item, 1); 
+                txtBarcodeInput.Focus();
             }
         }
 
@@ -905,7 +1060,7 @@ namespace YugiohShop
 
         private void cbCardTypeFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ApplySalesFilter();            );
+            ApplySalesFilter();           
         }
 
         private void cbAttributeFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -913,14 +1068,13 @@ namespace YugiohShop
             ApplySalesFilter();
         }
 
-        // Tạo helper method này 1 lần, dùng lại ở mọi chỗ
         private void ApplySalesFilter()
         {
             string keyword = txtSearchSalesProduct.Text.Trim();
-            string category = cbSalesCategoryFilter.Text;
-            string rarity = cbRarityFilter.SelectedIndex == -1 ? "Tất cả" : cbRarityFilter.Text;
-            string attribute = cbAttributeFilter.SelectedIndex == -1 ? "Tất cả" : cbAttributeFilter.Text;
-            string cardType = cbCardTypeFilter.SelectedIndex == -1 ? "Tất cả" : cbCardTypeFilter.Text;
+            string category = cbSalesCategoryFilter.SelectedIndex <= 0 ? "Tất cả" : cbSalesCategoryFilter.Text;
+            string rarity = cbRarityFilter.SelectedIndex <= 0 ? "Tất cả" : cbRarityFilter.Text;
+            string attribute = cbAttributeFilter.SelectedIndex <= 0 ? "Tất cả" : cbAttributeFilter.Text;
+            string cardType = cbCardTypeFilter.SelectedIndex <= 0 ? "Tất cả" : cbCardTypeFilter.Text;
 
             LoadSalesProducts(keyword, category, rarity, attribute, cardType);
         }

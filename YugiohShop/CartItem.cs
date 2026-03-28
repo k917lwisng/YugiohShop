@@ -9,6 +9,8 @@ namespace YugiohShop
     public class CartItem
     {
         public int ProductId { get; set; }
+        public int VariantId { get; set; }   
+        public string Rarity { get; set; }
         public string Code { get; set; }
         public string CardCode { get; set; }
         public string Name { get; set; }

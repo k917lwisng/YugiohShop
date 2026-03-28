@@ -28,5 +28,14 @@ namespace YugiohShop
             conn.Open();
             return cmd.ExecuteNonQuery();
         }
+
+        public static object Scalar(string sql)
+        {
+            using var conn = new SqlConnection(DbConfig.ConnectionString);
+            using var cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            return cmd.ExecuteScalar();
+        }
+
     }
 }

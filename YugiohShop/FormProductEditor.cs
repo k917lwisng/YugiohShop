@@ -37,15 +37,23 @@ namespace YugiohShop
             cbCategory.Items.Add("FullBox");
             cbCategory.SelectedIndex = 0;
 
-            txtSellPrice.Maximum = 1000000000;
-            txtSellPrice.Minimum = 0;
-            txtSellPrice.ThousandsSeparator = true;
+            cbAttribute.Items.AddRange(new[] { "DARK", "LIGHT", "FIRE", "WATER", "EARTH", "WIND", "DIVINE" });
+            cbAttribute.SelectedIndex = -1;
 
-            txtCostPrice.Maximum = 1000000000;
-            txtCostPrice.Minimum = 0;
-            txtCostPrice.ThousandsSeparator = true;
+            cbCardType.Items.AddRange(new[] { "Monster", "Spell", "Trap" });
+            cbCardType.SelectedIndex = -1;
+
+            cbRarity.Items.AddRange(new[] {
+                "Common", "Rare", "Super Rare", "Ultra Rare",
+                "Secret Rare", "Prismatic Secret Rare"
+            });
+            cbRarity.SelectedIndex = -1;
+
+            SetupVariantGrid();
 
             chkIsActive.Checked = true;
+
+            dgvVariants.BringToFront();
 
             if (editingProductId != null)
             {
@@ -82,75 +90,80 @@ namespace YugiohShop
         {
             try
             {
+                // --- Validate ---
                 string code = txtCode.Text.Trim().Replace("'", "''");
                 string cardCode = txtCardCode.Text.Trim().Replace("'", "''");
                 string name = txtName.Text.Trim().Replace("'", "''");
-                string category = cbCategory.Text.Trim().Replace("'", "''");
+                string category = cbCategory.Text;
+                string attribute = cbAttribute.SelectedIndex == -1 ? "" : cbAttribute.Text;
+                string cardType = cbCardType.SelectedIndex == -1 ? "" : cbCardType.Text;
                 string imagePath = txtImagePath.Text.Trim().Replace("'", "''");
                 string note = txtNote.Text.Trim().Replace("'", "''");
+                int isActive = chkIsActive.Checked ? 1 : 0;
 
                 if (code == "" || name == "")
                 {
-                    MessageBox.Show("Vui lòng nhập mã sản phẩm và tên sản phẩm!");
+                    MessageBox.Show("Vui lòng nhập mã và tên sản phẩm!");
                     return;
                 }
 
-                decimal sellPrice = txtSellPrice.Value;
-                decimal costPrice = txtCostPrice.Value;
-                int stock = 0;
-                int.TryParse(txtStock.Text.Trim(), out stock);
-                int isActive = chkIsActive.Checked ? 1 : 0;
+                if (dgvVariants.Rows.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng thêm ít nhất 1 variant (độ hiếm)!");
+                    return;
+                }
 
-                string sellPriceSql = sellPrice.ToString(CultureInfo.InvariantCulture);
-                string costPriceSql = costPrice.ToString(CultureInfo.InvariantCulture);
-
-                string sql = "";
-
+                // --- Lưu Products ---
+                int productId;
                 if (editingProductId == null)
                 {
-                    sql = $@"
-                INSERT INTO Products
-                (Code, CardCode, Name, Category, SellPrice, CostPrice, Stock, IsActive, CreatedAt, ImagePath)
-                VALUES
-                (N'{code}', N'{cardCode}', N'{name}', N'{category}', {sellPriceSql}, {costPriceSql}, {stock}, {isActive}, GETDATE(), N'{imagePath}')";
+                    string sqlInsert = $@"
+                INSERT INTO Products (Code, CardCode, Name, Category, Attribute, CardType, IsActive, CreatedAt, ImagePath, Note)
+                OUTPUT INSERTED.ProductId
+                VALUES (N'{code}', N'{cardCode}', N'{name}', N'{category}',
+                        N'{attribute}', N'{cardType}', {isActive}, GETDATE(), N'{imagePath}', N'{note}')";
+
+                    productId = Convert.ToInt32(DbHelper.Scalar(sqlInsert));
                 }
                 else
                 {
-                    sql = $@"
-                UPDATE Products
-                SET Code = N'{code}',
-                    CardCode = N'{cardCode}',
-                    Name = N'{name}',
-                    Category = N'{category}',
-                    SellPrice = {sellPriceSql},
-                    CostPrice = {costPriceSql},
-                    Stock = {stock},
-                    IsActive = {isActive},
-                    ImagePath = N'{imagePath}'
-                WHERE ProductId = {editingProductId}";
+                    productId = editingProductId.Value;
+                    DbHelper.Execute($@"
+                UPDATE Products SET
+                    Code = N'{code}', CardCode = N'{cardCode}', Name = N'{name}',
+                    Category = N'{category}', Attribute = N'{attribute}', CardType = N'{cardType}',
+                    IsActive = {isActive}, ImagePath = N'{imagePath}', Note = N'{note}'
+                WHERE ProductId = {productId}");
+
+                    DbHelper.Execute($"DELETE FROM ProductVariants WHERE ProductId = {productId}");
                 }
 
-                int result = DbHelper.Execute(sql);
-
-                if (result > 0)
+                // --- Lưu Variants ---
+                foreach (DataGridViewRow row in dgvVariants.Rows)
                 {
-                    MessageBox.Show(editingProductId == null
-                        ? "Thêm sản phẩm thành công!"
-                        : "Sửa sản phẩm thành công!");
+                    string rarity = row.Cells["Rarity"].Value?.ToString() ?? "";
+                    decimal sellPrice = decimal.TryParse(row.Cells["SellPrice"].Value?.ToString(), out var sp) ? sp : 0;
+                    decimal costPrice = decimal.TryParse(row.Cells["CostPrice"].Value?.ToString(), out var cp) ? cp : 0;
+                    int stock = int.TryParse(row.Cells["Stock"].Value?.ToString(), out var st) ? st : 0;
 
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
+                    DbHelper.Execute($@"
+                INSERT INTO ProductVariants (ProductId, Rarity, SellPrice, CostPrice, Stock)
+                VALUES ({productId}, N'{rarity}',
+                        {sellPrice.ToString(CultureInfo.InvariantCulture)},
+                        {costPrice.ToString(CultureInfo.InvariantCulture)},
+                        {stock})");
                 }
-                else
-                {
-                    MessageBox.Show("Không có dữ liệu nào được lưu.");
-                }
+
+                MessageBox.Show(editingProductId == null ? "Thêm thành công!" : "Sửa thành công!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -180,9 +193,12 @@ namespace YugiohShop
                 txtCardCode.Text = row["CardCode"].ToString();
                 txtName.Text = row["Name"].ToString();
                 cbCategory.Text = row["Category"].ToString();
-                txtSellPrice.Value = Convert.ToDecimal(row["SellPrice"]);
-                txtCostPrice.Value = Convert.ToDecimal(row["CostPrice"]);
-                txtStock.Text = row["Stock"].ToString();
+                txtNote.Text = row["Note"] == DBNull.Value ? "" : row["Note"].ToString();
+                chkIsActive.Checked = Convert.ToBoolean(row["IsActive"]);
+
+                cbAttribute.Text = row["Attribute"] == DBNull.Value ? "" : row["Attribute"].ToString();
+                cbCardType.Text = row["CardType"] == DBNull.Value ? "" : row["CardType"].ToString();
+
                 txtImagePath.Text = row["ImagePath"].ToString();
 
                 string imagePath = row["ImagePath"].ToString();
@@ -190,21 +206,16 @@ namespace YugiohShop
 
                 if (!string.IsNullOrEmpty(imagePath) && File.Exists(fullPath))
                 {
-                    var oldImage = picProduct.Image;
-                    picProduct.Image = null;
-                    oldImage?.Dispose();
-
-                    var ms = new System.IO.MemoryStream(File.ReadAllBytes(fullPath));
+                    using var ms = new System.IO.MemoryStream(File.ReadAllBytes(fullPath));
                     picProduct.Image = Image.FromStream(ms);
                     picProduct.SizeMode = PictureBoxSizeMode.Zoom;
                 }
-                else
+
+                DataTable dtV = DbHelper.Query($"SELECT * FROM ProductVariants WHERE ProductId = {editingProductId} ORDER BY VariantId");
+                foreach (DataRow v in dtV.Rows)
                 {
-                    picProduct.Image = null; 
+                    dgvVariants.Rows.Add(v["VariantId"], v["Rarity"], v["SellPrice"], v["CostPrice"], v["Stock"]);
                 }
-
-                chkIsActive.Checked = Convert.ToBoolean(row["IsActive"]); 
-
             }
             catch (Exception ex)
             {
@@ -303,6 +314,101 @@ namespace YugiohShop
             {
                 MessageBox.Show("Lỗi lưu barcode: " + ex.Message);
             }
+        }
+
+        // Load combobox mới khi form mở
+        private void LoadEditorComboboxes()
+        {
+            cbAttribute.Items.AddRange(new[] { "DARK", "LIGHT", "FIRE", "WATER", "EARTH", "WIND", "DIVINE" });
+            cbAttribute.SelectedIndex = -1;
+
+            cbCardType.Items.AddRange(new[] { "Monster", "Spell", "Trap" });
+            cbCardType.SelectedIndex = -1;
+
+            cbRarity.Items.AddRange(new[] {
+        "Common", "Rare", "Super Rare", "Ultra Rare",
+        "Secret Rare", "Prismatic Secret Rare"
+    });
+            cbRarity.SelectedIndex = -1;
+        }
+
+        private void SetupVariantGrid()
+        {
+            dgvVariants.Columns.Clear();
+            dgvVariants.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "VariantId",
+                HeaderText = "ID",
+                Visible = false
+            });
+
+            dgvVariants.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Rarity",
+                HeaderText = "Độ hiếm",
+                Width = 160,
+                ReadOnly = true
+            });
+
+            dgvVariants.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "SellPrice",
+                HeaderText = "Giá bán",
+                Width = 120
+            });
+
+            dgvVariants.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "CostPrice",
+                HeaderText = "Giá vốn",
+                Width = 120
+            });
+
+            dgvVariants.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Stock",
+                HeaderText = "Tồn kho",
+                Width = 90
+            });
+
+            dgvVariants.ClearSelection();
+
+        }
+        // Thêm 1 dòng variant mới
+        private void btnAddVariant_Click(object sender, EventArgs e)
+        {
+            if (cbRarity.SelectedIndex == -1)
+            {
+                MessageBox.Show("Chọn độ hiếm trước!");
+                return;
+            }
+
+            string rarity = cbRarity.Text;
+
+            // Kiểm tra trùng rarity
+            foreach (DataGridViewRow r in dgvVariants.Rows)
+            {
+                if (r.Cells["Rarity"].Value?.ToString() == rarity)
+                {
+                    MessageBox.Show($"Đã có variant '{rarity}' rồi!");
+                    return;
+                }
+            }
+
+            dgvVariants.Rows.Add(null, rarity, 0, 0, 0);
+            cbRarity.SelectedIndex = -1;
+        }
+
+        // Xóa dòng đang chọn
+        private void btnDeleteVariant_Click(object sender, EventArgs e)
+        {
+            if (dgvVariants.Rows.Count == 0 || dgvVariants.CurrentRow == null || dgvVariants.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Chưa có dòng nào để xóa!");
+                return;
+            }
+
+            dgvVariants.Rows.RemoveAt(dgvVariants.CurrentRow.Index);
         }
 
     }

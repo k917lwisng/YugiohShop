@@ -117,27 +117,33 @@ namespace YugiohShop
                 ClearProductSelection();
                 flpProducts.Controls.Clear();
 
-                string sql = @"
-            SELECT ProductId, Code, Name, CardCode, Category, SellPrice, Stock, ImagePath, IsActive
-            FROM Products
-            WHERE 1 = 1";
+                // MỚI - dùng cái này
+string sql = @"
+    SELECT 
+        p.ProductId, p.Code, p.Name, p.CardCode, p.Category, 
+        ISNULL(p.ImagePath, '') AS ImagePath,
+        p.IsActive,
+        ISNULL(SUM(v.Stock), 0)     AS TotalStock,
+        ISNULL(MIN(v.SellPrice), 0) AS MinPrice
+    FROM Products p
+    LEFT JOIN ProductVariants v ON p.ProductId = v.ProductId
+    WHERE 1 = 1";
 
                 if (!string.IsNullOrWhiteSpace(keyword))
                 {
                     keyword = keyword.Replace("'", "''");
-
-                    sql += $@"
-                AND (Name LIKE N'%{keyword}%'
-                     OR CardCode LIKE '%{keyword}%')";
+                    sql += $" AND (p.Name LIKE N'%{keyword}%' OR p.CardCode LIKE '%{keyword}%')";
                 }
 
                 if (!string.IsNullOrWhiteSpace(category) && category != "Tất cả")
                 {
                     category = category.Replace("'", "''");
-
-                    sql += $@"
-                AND Category = N'{category}'";
+                    sql += $" AND p.Category = N'{category}'";
                 }
+
+                // Thêm GROUP BY vào cuối — BẮT BUỘC vì có SUM/MIN
+                sql += @" GROUP BY p.ProductId, p.Code, p.Name, p.CardCode, p.Category, p.ImagePath, p.IsActive";
+                sql += @" ORDER BY p.ProductId DESC";
 
                 DataTable dt = DbHelper.Query(sql);
 
@@ -146,8 +152,8 @@ namespace YugiohShop
                     int productId = Convert.ToInt32(row["ProductId"]);
                     string name = row["Name"].ToString();
                     string cardCategory = row["Category"].ToString();
-                    decimal price = Convert.ToDecimal(row["SellPrice"]);
-                    int stock = Convert.ToInt32(row["Stock"]);
+                    decimal price = row["MinPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(row["MinPrice"]);
+                    int stock = row["TotalStock"] == DBNull.Value ? 0 : Convert.ToInt32(row["TotalStock"]);
                     string imagePath = row["ImagePath"] == DBNull.Value ? "" : row["ImagePath"].ToString();
                     bool isActive = Convert.ToBoolean(row["IsActive"]);
 

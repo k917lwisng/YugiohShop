@@ -113,6 +113,22 @@ namespace YugiohShop
             txtPassword.UseSystemPasswordChar = true;
             txtPassword.Text = "";
             txtPassword.ForeColor = Color.Black;
+
+            PanelLogin.Location = new Point(
+                (this.ClientSize.Width - PanelLogin.Width) / 2,
+                (this.ClientSize.Height - PanelLogin.Height) / 2
+
+            );
+            PanelLoginDepth.Location = new Point(
+                (this.ClientSize.Width - PanelLogin.Width) / 2,
+                (this.ClientSize.Height - PanelLogin.Height) / 2
+
+            );
+        }
+
+        private void guna2HtmlLabel4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

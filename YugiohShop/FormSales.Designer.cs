@@ -84,7 +84,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges46 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tlpMain = new TableLayoutPanel();
             pnlSalesLeft = new Guna.UI2.WinForms.Guna2Panel();
-            flpSalesProducts = new FlowLayoutPanel();
             pnlProductTop = new Panel();
             txtBarcodeInput = new Guna.UI2.WinForms.Guna2TextBox();
             cbAttributeFilter = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -93,6 +92,7 @@
             cbRarityFilter = new Guna.UI2.WinForms.Guna2ComboBox();
             cbSalesCategoryFilter = new Guna.UI2.WinForms.Guna2ComboBox();
             txtSearchSalesProduct = new Guna.UI2.WinForms.Guna2TextBox();
+            flpSalesProducts = new FlowLayoutPanel();
             pnlSalesCenter = new Guna.UI2.WinForms.Guna2Panel();
             pnlCartBottom = new Guna.UI2.WinForms.Guna2Panel();
             btnClearCart = new Guna.UI2.WinForms.Guna2Button();
@@ -139,8 +139,8 @@
             // tlpMain
             // 
             tlpMain.ColumnCount = 3;
-            tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
+            tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             tlpMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlpMain.Controls.Add(pnlSalesLeft, 0, 0);
             tlpMain.Controls.Add(pnlSalesCenter, 1, 0);
@@ -150,30 +150,20 @@
             tlpMain.Name = "tlpMain";
             tlpMain.RowCount = 1;
             tlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlpMain.Size = new Size(1482, 603);
+            tlpMain.Size = new Size(1479, 603);
             tlpMain.TabIndex = 0;
             // 
             // pnlSalesLeft
             // 
-            pnlSalesLeft.Controls.Add(flpSalesProducts);
             pnlSalesLeft.Controls.Add(pnlProductTop);
+            pnlSalesLeft.Controls.Add(flpSalesProducts);
             pnlSalesLeft.CustomizableEdges = customizableEdges15;
-            pnlSalesLeft.Dock = DockStyle.Fill;
             pnlSalesLeft.Location = new Point(5, 5);
             pnlSalesLeft.Margin = new Padding(5);
             pnlSalesLeft.Name = "pnlSalesLeft";
             pnlSalesLeft.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            pnlSalesLeft.Size = new Size(879, 593);
+            pnlSalesLeft.Size = new Size(655, 593);
             pnlSalesLeft.TabIndex = 0;
-            // 
-            // flpSalesProducts
-            // 
-            flpSalesProducts.AutoScroll = true;
-            flpSalesProducts.Dock = DockStyle.Fill;
-            flpSalesProducts.Location = new Point(0, 50);
-            flpSalesProducts.Name = "flpSalesProducts";
-            flpSalesProducts.Size = new Size(879, 543);
-            flpSalesProducts.TabIndex = 1;
             // 
             // pnlProductTop
             // 
@@ -187,7 +177,7 @@
             pnlProductTop.Dock = DockStyle.Top;
             pnlProductTop.Location = new Point(0, 0);
             pnlProductTop.Name = "pnlProductTop";
-            pnlProductTop.Size = new Size(879, 50);
+            pnlProductTop.Size = new Size(655, 99);
             pnlProductTop.TabIndex = 0;
             // 
             // txtBarcodeInput
@@ -204,7 +194,7 @@
             txtBarcodeInput.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtBarcodeInput.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtBarcodeInput.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtBarcodeInput.Location = new Point(791, 7);
+            txtBarcodeInput.Location = new Point(563, 15);
             txtBarcodeInput.Name = "txtBarcodeInput";
             txtBarcodeInput.PlaceholderText = "";
             txtBarcodeInput.SelectedText = "";
@@ -226,8 +216,7 @@
             cbAttributeFilter.Font = new Font("Segoe UI", 10F);
             cbAttributeFilter.ForeColor = Color.FromArgb(68, 88, 112);
             cbAttributeFilter.ItemHeight = 30;
-            cbAttributeFilter.Items.AddRange(new object[] { "Tất cả", "Single Card", "Pack", "Full box" });
-            cbAttributeFilter.Location = new Point(602, 7);
+            cbAttributeFilter.Location = new Point(427, 54);
             cbAttributeFilter.Name = "cbAttributeFilter";
             cbAttributeFilter.ShadowDecoration.CustomizableEdges = customizableEdges4;
             cbAttributeFilter.Size = new Size(117, 36);
@@ -247,7 +236,7 @@
             btnRefreshSalesProducts.Font = new Font("Segoe UI", 9F);
             btnRefreshSalesProducts.ForeColor = Color.White;
             btnRefreshSalesProducts.Image = (Image)resources.GetObject("btnRefreshSalesProducts.Image");
-            btnRefreshSalesProducts.Location = new Point(725, 8);
+            btnRefreshSalesProducts.Location = new Point(563, 57);
             btnRefreshSalesProducts.Name = "btnRefreshSalesProducts";
             btnRefreshSalesProducts.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnRefreshSalesProducts.Size = new Size(48, 36);
@@ -268,8 +257,7 @@
             cbCardTypeFilter.Font = new Font("Segoe UI", 10F);
             cbCardTypeFilter.ForeColor = Color.FromArgb(68, 88, 112);
             cbCardTypeFilter.ItemHeight = 30;
-            cbCardTypeFilter.Items.AddRange(new object[] { "Tất cả", "Single Card", "Pack", "Full box" });
-            cbCardTypeFilter.Location = new Point(479, 7);
+            cbCardTypeFilter.Location = new Point(266, 54);
             cbCardTypeFilter.Name = "cbCardTypeFilter";
             cbCardTypeFilter.ShadowDecoration.CustomizableEdges = customizableEdges8;
             cbCardTypeFilter.Size = new Size(117, 36);
@@ -290,8 +278,7 @@
             cbRarityFilter.Font = new Font("Segoe UI", 10F);
             cbRarityFilter.ForeColor = Color.FromArgb(68, 88, 112);
             cbRarityFilter.ItemHeight = 30;
-            cbRarityFilter.Items.AddRange(new object[] { "Tất cả", "Single Card", "Pack", "Full box" });
-            cbRarityFilter.Location = new Point(356, 7);
+            cbRarityFilter.Location = new Point(427, 8);
             cbRarityFilter.Name = "cbRarityFilter";
             cbRarityFilter.ShadowDecoration.CustomizableEdges = customizableEdges10;
             cbRarityFilter.Size = new Size(117, 36);
@@ -312,8 +299,7 @@
             cbSalesCategoryFilter.Font = new Font("Segoe UI", 10F);
             cbSalesCategoryFilter.ForeColor = Color.FromArgb(68, 88, 112);
             cbSalesCategoryFilter.ItemHeight = 30;
-            cbSalesCategoryFilter.Items.AddRange(new object[] { "Tất cả", "Single Card", "Pack", "Full box" });
-            cbSalesCategoryFilter.Location = new Point(233, 7);
+            cbSalesCategoryFilter.Location = new Point(266, 17);
             cbSalesCategoryFilter.Name = "cbSalesCategoryFilter";
             cbSalesCategoryFilter.ShadowDecoration.CustomizableEdges = customizableEdges12;
             cbSalesCategoryFilter.Size = new Size(117, 36);
@@ -334,7 +320,7 @@
             txtSearchSalesProduct.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtSearchSalesProduct.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtSearchSalesProduct.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtSearchSalesProduct.Location = new Point(7, 7);
+            txtSearchSalesProduct.Location = new Point(13, 29);
             txtSearchSalesProduct.Name = "txtSearchSalesProduct";
             txtSearchSalesProduct.PlaceholderText = "Tìm tên hoặc mã thẻ";
             txtSearchSalesProduct.SelectedText = "";
@@ -343,6 +329,15 @@
             txtSearchSalesProduct.TabIndex = 0;
             txtSearchSalesProduct.TextChanged += txtSearchSalesProduct_TextChanged;
             // 
+            // flpSalesProducts
+            // 
+            flpSalesProducts.AutoScroll = true;
+            flpSalesProducts.Dock = DockStyle.Bottom;
+            flpSalesProducts.Location = new Point(0, 96);
+            flpSalesProducts.Name = "flpSalesProducts";
+            flpSalesProducts.Size = new Size(655, 497);
+            flpSalesProducts.TabIndex = 1;
+            // 
             // pnlSalesCenter
             // 
             pnlSalesCenter.Controls.Add(pnlCartBottom);
@@ -350,11 +345,11 @@
             pnlSalesCenter.Controls.Add(pnlCartTop);
             pnlSalesCenter.CustomizableEdges = customizableEdges29;
             pnlSalesCenter.Dock = DockStyle.Fill;
-            pnlSalesCenter.Location = new Point(894, 5);
+            pnlSalesCenter.Location = new Point(670, 5);
             pnlSalesCenter.Margin = new Padding(5);
             pnlSalesCenter.Name = "pnlSalesCenter";
             pnlSalesCenter.ShadowDecoration.CustomizableEdges = customizableEdges30;
-            pnlSalesCenter.Size = new Size(286, 593);
+            pnlSalesCenter.Size = new Size(507, 593);
             pnlSalesCenter.TabIndex = 1;
             // 
             // pnlCartBottom
@@ -368,7 +363,7 @@
             pnlCartBottom.Location = new Point(0, 533);
             pnlCartBottom.Name = "pnlCartBottom";
             pnlCartBottom.ShadowDecoration.CustomizableEdges = customizableEdges26;
-            pnlCartBottom.Size = new Size(286, 60);
+            pnlCartBottom.Size = new Size(507, 60);
             pnlCartBottom.TabIndex = 2;
             // 
             // btnClearCart
@@ -385,7 +380,7 @@
             btnClearCart.FillColor = Color.FromArgb(26, 115, 232);
             btnClearCart.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClearCart.ForeColor = Color.White;
-            btnClearCart.Location = new Point(345, 17);
+            btnClearCart.Location = new Point(383, 17);
             btnClearCart.Name = "btnClearCart";
             btnClearCart.ShadowDecoration.CustomizableEdges = customizableEdges18;
             btnClearCart.Size = new Size(59, 24);
@@ -405,7 +400,7 @@
             btnRemoveCartItem.FillColor = Color.FromArgb(26, 115, 232);
             btnRemoveCartItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnRemoveCartItem.ForeColor = Color.White;
-            btnRemoveCartItem.Location = new Point(241, 17);
+            btnRemoveCartItem.Location = new Point(279, 17);
             btnRemoveCartItem.Name = "btnRemoveCartItem";
             btnRemoveCartItem.ShadowDecoration.CustomizableEdges = customizableEdges20;
             btnRemoveCartItem.Size = new Size(59, 24);
@@ -425,7 +420,7 @@
             btnDecreaseQty.FillColor = Color.FromArgb(26, 115, 232);
             btnDecreaseQty.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDecreaseQty.ForeColor = Color.White;
-            btnDecreaseQty.Location = new Point(127, 17);
+            btnDecreaseQty.Location = new Point(165, 17);
             btnDecreaseQty.Name = "btnDecreaseQty";
             btnDecreaseQty.ShadowDecoration.CustomizableEdges = customizableEdges22;
             btnDecreaseQty.Size = new Size(59, 24);
@@ -445,7 +440,7 @@
             btnIncreaseQty.FillColor = Color.FromArgb(26, 115, 232);
             btnIncreaseQty.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnIncreaseQty.ForeColor = Color.White;
-            btnIncreaseQty.Location = new Point(28, 17);
+            btnIncreaseQty.Location = new Point(66, 17);
             btnIncreaseQty.Name = "btnIncreaseQty";
             btnIncreaseQty.ShadowDecoration.CustomizableEdges = customizableEdges24;
             btnIncreaseQty.Size = new Size(59, 24);
@@ -479,7 +474,7 @@
             dgvCart.Location = new Point(0, 50);
             dgvCart.Name = "dgvCart";
             dgvCart.RowHeadersVisible = false;
-            dgvCart.Size = new Size(286, 543);
+            dgvCart.Size = new Size(507, 543);
             dgvCart.TabIndex = 1;
             dgvCart.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
             dgvCart.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -514,7 +509,7 @@
             pnlCartTop.Location = new Point(0, 0);
             pnlCartTop.Name = "pnlCartTop";
             pnlCartTop.ShadowDecoration.CustomizableEdges = customizableEdges28;
-            pnlCartTop.Size = new Size(286, 50);
+            pnlCartTop.Size = new Size(507, 50);
             pnlCartTop.TabIndex = 0;
             // 
             // lblCartTitle
@@ -522,7 +517,7 @@
             lblCartTitle.BackColor = Color.Transparent;
             lblCartTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblCartTitle.ForeColor = Color.Black;
-            lblCartTitle.Location = new Point(3, 7);
+            lblCartTitle.Location = new Point(114, 7);
             lblCartTitle.Name = "lblCartTitle";
             lblCartTitle.Size = new Size(63, 17);
             lblCartTitle.TabIndex = 0;
@@ -534,8 +529,7 @@
             pnlSalesRight.Controls.Add(pnlPaymentInfo);
             pnlSalesRight.Controls.Add(pnlCustomerInfo);
             pnlSalesRight.CustomizableEdges = customizableEdges49;
-            pnlSalesRight.Dock = DockStyle.Fill;
-            pnlSalesRight.Location = new Point(1190, 5);
+            pnlSalesRight.Location = new Point(1187, 5);
             pnlSalesRight.Margin = new Padding(5);
             pnlSalesRight.Name = "pnlSalesRight";
             pnlSalesRight.ShadowDecoration.CustomizableEdges = customizableEdges50;
@@ -547,7 +541,6 @@
             pnlPaymentButtons.Controls.Add(btnCancelOrder);
             pnlPaymentButtons.Controls.Add(btnCheckout);
             pnlPaymentButtons.CustomizableEdges = customizableEdges35;
-            pnlPaymentButtons.Dock = DockStyle.Top;
             pnlPaymentButtons.Location = new Point(0, 370);
             pnlPaymentButtons.Name = "pnlPaymentButtons";
             pnlPaymentButtons.ShadowDecoration.CustomizableEdges = customizableEdges36;
@@ -603,7 +596,6 @@
             pnlPaymentInfo.Controls.Add(lblDiscountText);
             pnlPaymentInfo.Controls.Add(lblSubTotalText);
             pnlPaymentInfo.CustomizableEdges = customizableEdges41;
-            pnlPaymentInfo.Dock = DockStyle.Top;
             pnlPaymentInfo.Location = new Point(0, 150);
             pnlPaymentInfo.Name = "pnlPaymentInfo";
             pnlPaymentInfo.ShadowDecoration.CustomizableEdges = customizableEdges42;
@@ -745,7 +737,6 @@
             pnlCustomerInfo.Controls.Add(btnFindCustomer);
             pnlCustomerInfo.Controls.Add(txtCustomerPhone);
             pnlCustomerInfo.CustomizableEdges = customizableEdges47;
-            pnlCustomerInfo.Dock = DockStyle.Top;
             pnlCustomerInfo.Location = new Point(0, 0);
             pnlCustomerInfo.Name = "pnlCustomerInfo";
             pnlCustomerInfo.ShadowDecoration.CustomizableEdges = customizableEdges48;
@@ -829,11 +820,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1482, 603);
+            BackColor = Color.FromArgb(246, 248, 252);
+            ClientSize = new Size(1479, 603);
             Controls.Add(tlpMain);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormSales";
             Text = "Bán hàng";
             WindowState = FormWindowState.Maximized;
+            Load += FormSales_Load;
             tlpMain.ResumeLayout(false);
             pnlSalesLeft.ResumeLayout(false);
             pnlProductTop.ResumeLayout(false);

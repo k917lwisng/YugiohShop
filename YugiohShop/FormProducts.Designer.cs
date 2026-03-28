@@ -51,7 +51,7 @@
             cbCategoryFilter = new Guna.UI2.WinForms.Guna2ComboBox();
             txtSearchProduct = new Guna.UI2.WinForms.Guna2TextBox();
             flpProducts = new FlowLayoutPanel();
-            panel1 = new Panel();
+            LeftPanel = new Panel();
             btnRefreshProduct = new Guna.UI2.WinForms.Guna2Button();
             btnEditProduct = new Guna.UI2.WinForms.Guna2Button();
             btnAddProduct = new Guna.UI2.WinForms.Guna2Button();
@@ -59,7 +59,7 @@
             guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(components);
             lblMenuProducts = new Guna.UI2.WinForms.Guna2HtmlLabel();
             pnlTop.SuspendLayout();
-            panel1.SuspendLayout();
+            LeftPanel.SuspendLayout();
             SuspendLayout();
             // 
             // pnlTop
@@ -70,11 +70,11 @@
             pnlTop.Controls.Add(txtSearchProduct);
             pnlTop.CustomizableEdges = customizableEdges7;
             pnlTop.Dock = DockStyle.Top;
-            pnlTop.Location = new Point(210, 0);
+            pnlTop.Location = new Point(225, 15);
             pnlTop.Margin = new Padding(2);
             pnlTop.Name = "pnlTop";
             pnlTop.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            pnlTop.Size = new Size(665, 60);
+            pnlTop.Size = new Size(635, 60);
             pnlTop.TabIndex = 1;
             // 
             // btnClearFilter
@@ -158,26 +158,26 @@
             flpProducts.AutoScroll = true;
             flpProducts.BackColor = Color.White;
             flpProducts.Dock = DockStyle.Fill;
-            flpProducts.Location = new Point(210, 60);
+            flpProducts.Location = new Point(225, 75);
             flpProducts.Margin = new Padding(2);
             flpProducts.Name = "flpProducts";
-            flpProducts.Size = new Size(665, 379);
+            flpProducts.Size = new Size(635, 349);
             flpProducts.TabIndex = 2;
             // 
-            // panel1
+            // LeftPanel
             // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(btnRefreshProduct);
-            panel1.Controls.Add(btnEditProduct);
-            panel1.Controls.Add(btnAddProduct);
-            panel1.Controls.Add(btnDeleteProduct);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(2);
-            panel1.Name = "panel1";
-            panel1.Padding = new Padding(10, 36, 10, 12);
-            panel1.Size = new Size(210, 439);
-            panel1.TabIndex = 1;
+            LeftPanel.BackColor = Color.White;
+            LeftPanel.Controls.Add(btnRefreshProduct);
+            LeftPanel.Controls.Add(btnEditProduct);
+            LeftPanel.Controls.Add(btnAddProduct);
+            LeftPanel.Controls.Add(btnDeleteProduct);
+            LeftPanel.Dock = DockStyle.Left;
+            LeftPanel.Location = new Point(15, 15);
+            LeftPanel.Margin = new Padding(2);
+            LeftPanel.Name = "LeftPanel";
+            LeftPanel.Padding = new Padding(10, 36, 10, 12);
+            LeftPanel.Size = new Size(210, 409);
+            LeftPanel.TabIndex = 1;
             // 
             // btnRefreshProduct
             // 
@@ -303,18 +303,20 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(875, 439);
             Controls.Add(flpProducts);
             Controls.Add(pnlTop);
-            Controls.Add(panel1);
+            Controls.Add(LeftPanel);
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(2);
             Name = "FormProducts";
-            Text = "QUẢN LÝ SẢN PHẨM";
+            Padding = new Padding(15);
+            Text = "ca";
             WindowState = FormWindowState.Maximized;
             Load += FormProducts_Load;
             pnlTop.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            LeftPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -324,7 +326,7 @@
         private Guna.UI2.WinForms.Guna2Button btnClearFilter;
         private Guna.UI2.WinForms.Guna2TextBox txtSearchProduct;
         private Guna.UI2.WinForms.Guna2ComboBox cbCategoryFilter;
-        private Panel panel1;
+        private Panel LeftPanel;
         private Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
         private Guna.UI2.WinForms.Guna2Button btnRefreshProduct;
         private Guna.UI2.WinForms.Guna2Button btnEditProduct;

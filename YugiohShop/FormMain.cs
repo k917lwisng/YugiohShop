@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace YugiohShop
 {
@@ -18,10 +19,43 @@ namespace YugiohShop
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            OpenChildForm(new FormProducts(), btnProducts);
+            ApplyRoundedClip(rightPanel, 15);
+
+            Timer timer = new Timer();
+            timer.Interval = 1000;
+            timer.Tick += (s, ev) => UpdateDateNow();
+            timer.Start();
+
+            UpdateDateNow();
+
+            OpenChildForm(new FormDashboard(), "Dashboard", btnDashboard);
+
         }
 
-        private void OpenChildForm(Form childForm, Guna2Button sender = null)
+        private void ApplyRoundedClip(Control ctrl, int radius)
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(0, 0, radius * 2, radius * 2, 180, 90);
+            path.AddArc(ctrl.Width - radius * 2, 0, radius * 2, radius * 2, 270, 90);
+            path.AddArc(ctrl.Width - radius * 2, ctrl.Height - radius * 2, radius * 2, radius * 2, 0, 90);
+            path.AddArc(0, ctrl.Height - radius * 2, radius * 2, radius * 2, 90, 90);
+            path.CloseAllFigures();
+            ctrl.Region = new Region(path);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (rightPanel != null)
+                ApplyRoundedClip(rightPanel, 15);
+        }
+
+        private void UpdateDateNow()
+        {
+            lblDateNow.Text = DateTime.Now.ToString("dddd, dd/MM/yyyy - HH:mm", new System.Globalization.CultureInfo("vi-VN"));
+        }
+
+        private void OpenChildForm(Form childForm, string title, Guna2Button sender = null)
         {
             if (currentForm != null) currentForm.Close();
 
@@ -34,42 +68,46 @@ namespace YugiohShop
             rightPanel.Controls.Add(childForm);
             childForm.Show();
 
+            lblTitleControl.Text = title;
+
             if (sender != null) SetActiveButton(sender);
         }
 
         private void SetActiveButton(Guna2Button btn)
         {
-            // Reset tất cả
-            Guna2Button[] navBtns = { btnProducts, btnCustomers, btnSales, btnStatistics };
+            Guna2Button[] navBtns = { btnProducts, btnCustomers, btnSales, btnStatistics, btnDashboard };
+
+            // Reset tất cả về trạng thái ban đầu
             foreach (var b in navBtns)
             {
                 b.FillColor = Color.Transparent;
-                b.ForeColor = Color.Black;
+                b.ForeColor = Color.DimGray;
                 b.Image = GetIcon(b, isActive: false);
             }
 
-            // Set active
+            // Active button
             _activeBtn = btn;
-            btn.FillColor = Color.FromArgb(26, 115, 232);
-            btn.ForeColor = Color.White;
-            btn.Image = GetIcon(btn, isActive: true);
+            btn.FillColor = Color.FromArgb(235, 242, 255);        // xanh nhạt nền
+            btn.ForeColor = Color.RoyalBlue;                       // chữ royal blue
+            btn.Image = GetIcon(btn, isActive: true);              // icon đổi sang royal blue
 
-            leftPanel.Invalidate(); // vẽ lại thanh indicator
+            leftPanel.Invalidate();
         }
 
         private Image GetIcon(Guna2Button btn, bool isActive)
         {
             string iconDir = Path.GetFullPath(
         Path.Combine(Application.StartupPath, "..", "..", "..", "icons"));
-            string suffix = isActive ? "white" : "black";
+            string suffix = isActive ? "RoyalBlue" : "DimGray";
 
             string fileName = btn.Name switch
             {
-                "btnProducts" => $"package_{suffix}.png",
+                "btnProducts" => $"box_{suffix}.png",
                 "btnCustomers" => $"contact_{suffix}.png",
-                "btnSales" => $"sale_{suffix}.png",
-                "btnStatistics" => $"analytics_{suffix}.png",
+                "btnSales" => $"shopping_cart_{suffix}.png",
+                "btnStatistics" => $"report_{suffix}.png",
                 "btnLogout" => $"logout_{suffix}.png",
+                "btnDashboard" => $"dashboard_{suffix}.png",
                 _ => ""
             };
 
@@ -87,16 +125,16 @@ namespace YugiohShop
         }
 
         private void btnProducts_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormProducts(), btnProducts);
+            => OpenChildForm(new FormProducts(), "Sản phẩm", btnProducts);
 
         private void btnCustomers_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormCustomers(), btnCustomers);
+            => OpenChildForm(new FormCustomers(), "Khách hàng", btnCustomers);
 
         private void btnSales_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormSales(), btnSales);
+            => OpenChildForm(new FormSales(), "Bán hàng", btnSales);
 
         private void btnStatistics_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormStatistics(), btnStatistics);
+            => OpenChildForm(new FormStatistics(), "Thống kê", btnStatistics);
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
