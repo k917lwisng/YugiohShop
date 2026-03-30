@@ -45,10 +45,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             leftPanel = new Panel();
             guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblHeThong = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -70,6 +72,7 @@
             lblDateNow = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblTitleControl = new Guna.UI2.WinForms.Guna2HtmlLabel();
             rightPanel = new Guna.UI2.WinForms.Guna2Panel();
+            cboDateRange = new Guna.UI2.WinForms.Guna2ComboBox();
             leftPanel.SuspendLayout();
             topPanel.SuspendLayout();
             SuspendLayout();
@@ -197,6 +200,7 @@
             btnDashboard.TabIndex = 16;
             btnDashboard.Text = "Dashboard";
             btnDashboard.TextAlign = HorizontalAlignment.Left;
+            btnDashboard.Click += btnDashboard_Click;
             // 
             // lblTongQuan
             // 
@@ -248,6 +252,7 @@
             guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges6;
             guna2Button1.Size = new Size(36, 36);
             guna2Button1.TabIndex = 11;
+            guna2Button1.TextAlign = HorizontalAlignment.Right;
             // 
             // guna2Separator1
             // 
@@ -390,13 +395,14 @@
             // 
             topPanel.BackColor = Color.White;
             topPanel.BorderRadius = 8;
+            topPanel.Controls.Add(cboDateRange);
             topPanel.Controls.Add(lblDateNow);
             topPanel.Controls.Add(lblTitleControl);
-            topPanel.CustomizableEdges = customizableEdges17;
+            topPanel.CustomizableEdges = customizableEdges19;
             topPanel.Dock = DockStyle.Top;
             topPanel.Location = new Point(174, 0);
             topPanel.Name = "topPanel";
-            topPanel.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            topPanel.ShadowDecoration.CustomizableEdges = customizableEdges20;
             topPanel.Size = new Size(822, 56);
             topPanel.TabIndex = 1;
             // 
@@ -426,14 +432,37 @@
             // 
             rightPanel.BackColor = Color.FromArgb(246, 248, 252);
             rightPanel.BorderRadius = 15;
-            rightPanel.CustomizableEdges = customizableEdges19;
+            rightPanel.CustomizableEdges = customizableEdges21;
             rightPanel.Dock = DockStyle.Fill;
             rightPanel.Location = new Point(174, 56);
             rightPanel.Name = "rightPanel";
             rightPanel.Padding = new Padding(12);
-            rightPanel.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            rightPanel.ShadowDecoration.CustomizableEdges = customizableEdges22;
             rightPanel.Size = new Size(822, 652);
             rightPanel.TabIndex = 2;
+            // 
+            // cboDateRange
+            // 
+            cboDateRange.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cboDateRange.BackColor = Color.Transparent;
+            cboDateRange.BorderColor = Color.FromArgb(224, 224, 224);
+            cboDateRange.BorderRadius = 8;
+            cboDateRange.BorderThickness = 2;
+            cboDateRange.CustomizableEdges = customizableEdges17;
+            cboDateRange.DrawMode = DrawMode.OwnerDrawFixed;
+            cboDateRange.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboDateRange.FocusedColor = Color.FromArgb(94, 148, 255);
+            cboDateRange.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            cboDateRange.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cboDateRange.ForeColor = Color.DimGray;
+            cboDateRange.ItemHeight = 30;
+            cboDateRange.Location = new Point(641, 12);
+            cboDateRange.Name = "cboDateRange";
+            cboDateRange.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            cboDateRange.Size = new Size(160, 36);
+            cboDateRange.TabIndex = 3;
+            cboDateRange.Visible = false;
+            cboDateRange.SelectedIndexChanged += cboDateRange_SelectedIndexChanged;
             // 
             // FormMain
             // 
@@ -479,5 +508,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel lblDateNow;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Panel rightPanel;
+        private Guna.UI2.WinForms.Guna2ComboBox cboDateRange;
     }
 }

@@ -19,8 +19,6 @@ namespace YugiohShop
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            ApplyRoundedClip(rightPanel, 15);
-
             Timer timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += (s, ev) => UpdateDateNow();
@@ -30,24 +28,6 @@ namespace YugiohShop
 
             OpenChildForm(new FormDashboard(), "Dashboard", btnDashboard);
 
-        }
-
-        private void ApplyRoundedClip(Control ctrl, int radius)
-        {
-            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-            path.AddArc(0, 0, radius * 2, radius * 2, 180, 90);
-            path.AddArc(ctrl.Width - radius * 2, 0, radius * 2, radius * 2, 270, 90);
-            path.AddArc(ctrl.Width - radius * 2, ctrl.Height - radius * 2, radius * 2, radius * 2, 0, 90);
-            path.AddArc(0, ctrl.Height - radius * 2, radius * 2, radius * 2, 90, 90);
-            path.CloseAllFigures();
-            ctrl.Region = new Region(path);
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            if (rightPanel != null)
-                ApplyRoundedClip(rightPanel, 15);
         }
 
         private void UpdateDateNow()
@@ -125,16 +105,30 @@ namespace YugiohShop
         }
 
         private void btnProducts_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormProducts(), "Sản phẩm", btnProducts);
+        {
+            cboDateRange.Visible = false;
+
+            OpenChildForm(new FormProducts(), "Sản phẩm", btnProducts);
+        }
 
         private void btnCustomers_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormCustomers(), "Khách hàng", btnCustomers);
+        {
+            cboDateRange.Visible = false;
 
+            OpenChildForm(new FormCustomers(), "Khách hàng", btnCustomers);
+        }
         private void btnSales_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormSales(), "Bán hàng", btnSales);
+        {
+            cboDateRange.Visible = false;
 
+            OpenChildForm(new FormSales(), "Bán hàng", btnSales);
+        }
         private void btnStatistics_Click(object sender, EventArgs e)
-            => OpenChildForm(new FormStatistics(), "Thống kê", btnStatistics);
+        {
+            cboDateRange.Visible = false;
+
+            OpenChildForm(new FormStatistics(), "Thống kê", btnStatistics);
+        }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
@@ -151,14 +145,42 @@ namespace YugiohShop
             var menu = new ContextMenuStrip();
             menu.Items.Add("Đổi mật khẩu", null, (s, ev) =>
                 MessageBox.Show("Chức năng đổi mật khẩu (chưa làm)"));
-            menu.Items.Add("Đăng xuất", null, (s, ev) => {
+            menu.Items.Add("Đăng xuất", null, (s, ev) =>
+            {
                 this.Hide();
                 new FormLogin().Show();
             });
             menu.Show(btnUser, 0, btnUser.Height);
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e) { }
-        private void panel2_Paint(object sender, PaintEventArgs e) { }
+        //private void panel1_Paint(object sender, PaintEventArgs e) { }
+        //private void panel2_Paint(object sender, PaintEventArgs e) { }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            lblTitleControl.Text = "Dashboard";
+
+            // Show combobox và điền items nếu chưa có
+            cboDateRange.Visible = true;
+            if (cboDateRange.Items.Count == 0)
+            {
+                cboDateRange.Items.AddRange(new[] { "Hôm nay", "7 ngày", "Tháng này", "Tháng trước" });
+                cboDateRange.SelectedIndex = 2; // mặc định Tháng này
+            }
+
+            OpenChildForm(new FormDashboard(), "Dashboard");
+            SetActiveButton(btnDashboard);
+        }
+
+        private void cboDateRange_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Tìm FormDashboard đang active trong right panel rồi notify
+            var dashboard = rightPanel.Controls
+                .OfType<FormDashboard>()
+                .FirstOrDefault();
+
+            dashboard?.OnDateRangeChanged(cboDateRange.SelectedItem?.ToString());
+        }
+
     }
 }

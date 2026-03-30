@@ -40,7 +40,9 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             PanelLogin = new Guna.UI2.WinForms.Guna2Panel();
+            footer = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -51,8 +53,6 @@
             guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             PanelLoginDepth = new Guna.UI2.WinForms.Guna2Panel();
-            guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            footer = new Guna.UI2.WinForms.Guna2HtmlLabel();
             PanelLogin.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,13 +72,23 @@
             PanelLogin.Controls.Add(txtPassword);
             PanelLogin.Controls.Add(txtUsername);
             PanelLogin.CustomizableEdges = customizableEdges7;
-            PanelLogin.Location = new Point(287, 109);
+            PanelLogin.Location = new Point(317, 97);
             PanelLogin.Name = "PanelLogin";
             PanelLogin.ShadowDecoration.Color = Color.FromArgb(26, 39, 68);
             PanelLogin.ShadowDecoration.CustomizableEdges = customizableEdges8;
             PanelLogin.ShadowDecoration.Depth = 10;
             PanelLogin.Size = new Size(420, 520);
             PanelLogin.TabIndex = 2;
+            // 
+            // footer
+            // 
+            footer.BackColor = Color.Transparent;
+            footer.Font = new Font("Be Vietnam Pro", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            footer.Location = new Point(152, 468);
+            footer.Name = "footer";
+            footer.Size = new Size(105, 19);
+            footer.TabIndex = 5;
+            footer.Text = "YGO Shop © 2026";
             // 
             // guna2HtmlLabel7
             // 
@@ -90,6 +100,13 @@
             guna2HtmlLabel7.Size = new Size(66, 21);
             guna2HtmlLabel7.TabIndex = 13;
             guna2HtmlLabel7.Text = "Mật khẩu";
+            // 
+            // guna2Separator1
+            // 
+            guna2Separator1.Location = new Point(3, 109);
+            guna2Separator1.Name = "guna2Separator1";
+            guna2Separator1.Size = new Size(414, 53);
+            guna2Separator1.TabIndex = 4;
             // 
             // guna2HtmlLabel6
             // 
@@ -168,7 +185,7 @@
             txtPassword.Location = new Point(36, 282);
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderForeColor = Color.Empty;
-            txtPassword.PlaceholderText = "Mật khẩu";
+            txtPassword.PlaceholderText = "";
             txtPassword.SelectedText = "";
             txtPassword.ShadowDecoration.CustomizableEdges = customizableEdges4;
             txtPassword.Size = new Size(348, 44);
@@ -243,7 +260,7 @@
             // 
             PanelLoginDepth.Anchor = AnchorStyles.None;
             PanelLoginDepth.CustomizableEdges = customizableEdges9;
-            PanelLoginDepth.Location = new Point(287, 109);
+            PanelLoginDepth.Location = new Point(317, 97);
             PanelLoginDepth.Name = "PanelLoginDepth";
             PanelLoginDepth.ShadowDecoration.Color = Color.FromArgb(26, 39, 68);
             PanelLoginDepth.ShadowDecoration.CustomizableEdges = customizableEdges10;
@@ -252,29 +269,13 @@
             PanelLoginDepth.Size = new Size(420, 520);
             PanelLoginDepth.TabIndex = 3;
             // 
-            // guna2Separator1
-            // 
-            guna2Separator1.Location = new Point(3, 109);
-            guna2Separator1.Name = "guna2Separator1";
-            guna2Separator1.Size = new Size(414, 53);
-            guna2Separator1.TabIndex = 4;
-            // 
-            // footer
-            // 
-            footer.BackColor = Color.Transparent;
-            footer.Font = new Font("Be Vietnam Pro", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            footer.Location = new Point(152, 468);
-            footer.Name = "footer";
-            footer.Size = new Size(105, 19);
-            footer.TabIndex = 5;
-            footer.Text = "YGO Shop © 2026";
-            // 
             // FormLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(246, 248, 252);
-            ClientSize = new Size(1021, 745);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            ClientSize = new Size(1080, 720);
             Controls.Add(PanelLogin);
             Controls.Add(PanelLoginDepth);
             FormBorderStyle = FormBorderStyle.None;
@@ -282,6 +283,7 @@
             Name = "FormLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormLogin";
+            WindowState = FormWindowState.Maximized;
             Load += FormLogin_Load;
             PanelLogin.ResumeLayout(false);
             PanelLogin.PerformLayout();

@@ -863,7 +863,7 @@ namespace YugiohShop
 
                     using SqlCommand cmdStock = new SqlCommand(sqlStock, conn, tran);
                     cmdStock.Parameters.AddWithValue("@Qty", item.Quantity);
-                    cmdStock.Parameters.AddWithValue("@VariantId", item.VariantId);  
+                    cmdStock.Parameters.AddWithValue("@VariantId", item.VariantId);
 
                     int stockUpdated = cmdStock.ExecuteNonQuery();
                     if (stockUpdated == 0)
@@ -1000,49 +1000,6 @@ namespace YugiohShop
             return cart.FirstOrDefault(x => x.ProductId == selectedCartProductId.Value);
         }
 
-        private void txtBarcodeInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                string barcode = txtBarcodeInput.Text.Trim();
-                txtBarcodeInput.Clear();
-
-                if (string.IsNullOrEmpty(barcode)) return;
-
-                // Tìm sản phẩm theo CardCode hoặc Code
-                string sql = $@"
-                            SELECT ProductId, Code, CardCode, Name, Category,
-                                    SellPrice, CostPrice, Stock, ImagePath
-                            FROM Products
-                            WHERE IsActive = 1 AND Stock > 0
-                                AND (CardCode = N'{barcode}' OR Code = N'{barcode}')";
-
-                DataTable dt = DbHelper.Query(sql);
-                if (dt.Rows.Count == 0)
-                {
-                    MessageBox.Show($"Không tìm thấy sản phẩm: {barcode}");
-                    return;
-                }
-
-                DataRow row = dt.Rows[0];
-                CartItem item = new CartItem
-                {
-                    ProductId = Convert.ToInt32(row["ProductId"]),
-                    Code = row["Code"].ToString(),
-                    CardCode = row["CardCode"].ToString(),
-                    Name = row["Name"].ToString(),
-                    SellPrice = Convert.ToDecimal(row["SellPrice"]),
-                    CostPrice = Convert.ToDecimal(row["CostPrice"]),
-                    Quantity = 1,
-                    Stock = Convert.ToInt32(row["Stock"])
-                };
-
-                AddToCart(item, 1); 
-                txtBarcodeInput.Focus();
-            }
-        }
-
-
         private void lblDiscountText_Click(object sender, EventArgs e)
         {
 
@@ -1060,7 +1017,7 @@ namespace YugiohShop
 
         private void cbCardTypeFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ApplySalesFilter();           
+            ApplySalesFilter();
         }
 
         private void cbAttributeFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -1077,6 +1034,162 @@ namespace YugiohShop
             string cardType = cbCardTypeFilter.SelectedIndex <= 0 ? "Tất cả" : cbCardTypeFilter.Text;
 
             LoadSalesProducts(keyword, category, rarity, attribute, cardType);
+        }
+
+        private void btnBarcode_Click(object sender, EventArgs e)
+        {
+            ShowBarcodeScanPopup();
+        }
+
+        private void ShowBarcodeScanPopup()
+        {
+            Form popup = new Form();
+            popup.Text = "Quét barcode";
+            popup.Size = new Size(400, 220);
+            popup.StartPosition = FormStartPosition.CenterParent;
+            popup.FormBorderStyle = FormBorderStyle.FixedDialog;
+            popup.MaximizeBox = false;
+            popup.MinimizeBox = false;
+
+            // Icon trạng thái
+            Label lblIcon = new Label();
+            lblIcon.Text = "📷";
+            lblIcon.Font = new Font("Segoe UI", 28);
+            lblIcon.Location = new Point(160, 15);
+            lblIcon.Size = new Size(60, 50);
+            lblIcon.TextAlign = ContentAlignment.MiddleCenter;
+
+            // Label trạng thái
+            Label lblStatus = new Label();
+            lblStatus.Text = "Đang chờ quét mã...";
+            lblStatus.Font = new Font("Segoe UI", 11);
+            lblStatus.ForeColor = Color.RoyalBlue;
+            lblStatus.Location = new Point(20, 75);
+            lblStatus.Size = new Size(350, 25);
+            lblStatus.TextAlign = ContentAlignment.MiddleCenter;
+
+            // Ô ẩn nhận barcode
+            TextBox txtScan = new TextBox();
+            txtScan.Location = new Point(-500, -500); // ẩn ra ngoài màn hình
+            txtScan.Size = new Size(1, 1);
+
+            // Label kết quả
+            Label lblResult = new Label();
+            lblResult.Font = new Font("Segoe UI", 10);
+            lblResult.Location = new Point(20, 105);
+            lblResult.Size = new Size(350, 45);
+            lblResult.TextAlign = ContentAlignment.MiddleCenter;
+
+            // Nút đóng
+            Button btnClose = new Button();
+            btnClose.Text = "Đóng";
+            btnClose.Location = new Point(140, 155);
+            btnClose.Size = new Size(100, 35);
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Click += (s, ev) => popup.Close();
+
+            // Xử lý khi nhận barcode
+            txtScan.KeyDown += (s, ev) =>
+            {
+                if (ev.KeyCode != Keys.Enter) return;
+
+                string barcode = txtScan.Text.Trim();
+                txtScan.Clear();
+                if (string.IsNullOrEmpty(barcode)) return;
+
+                try
+                {
+                    using var conn = new SqlConnection(DbConfig.ConnectionString);
+                    conn.Open();
+
+                    string sql = @"
+                SELECT DISTINCT p.ProductId, p.Name
+                FROM Products p
+                INNER JOIN ProductVariants v ON p.ProductId = v.ProductId
+                WHERE p.IsActive = 1 AND v.Stock > 0
+                AND (p.CardCode = @barcode OR p.Code = @barcode)";
+
+                    using var cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@barcode", barcode);
+
+                    var dt = new DataTable();
+                    new SqlDataAdapter(cmd).Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        // Không tìm thấy
+                        lblIcon.Text = "❌";
+                        lblStatus.Text = $"Không tìm thấy: {barcode}";
+                        lblStatus.ForeColor = Color.Red;
+                        lblResult.Text = "Sản phẩm không có trong hệ thống";
+                        lblResult.ForeColor = Color.Red;
+
+                        // Reset lại sau 2 giây
+                        var timers = new System.Windows.Forms.Timer();
+                        timers.Interval = 2000;
+                        timers.Tick += (ts, te) =>
+                        {
+                            timers.Stop();
+                            lblIcon.Text = "📷";
+                            lblStatus.Text = "Đang chờ quét mã...";
+                            lblStatus.ForeColor = Color.RoyalBlue;
+                            lblResult.Text = "";
+                            txtScan.Focus();
+                        };
+                        timers.Start();
+                        return;
+                    }
+
+                    // Tìm thấy
+                    int productId = Convert.ToInt32(dt.Rows[0]["ProductId"]);
+                    string productName = dt.Rows[0]["Name"].ToString();
+
+                    lblIcon.Text = "✅";
+                    lblStatus.Text = $"Tìm thấy: {productName}";
+                    lblStatus.ForeColor = Color.Green;
+                    lblResult.Text = "Đã thêm vào giỏ!";
+                    lblResult.ForeColor = Color.SeaGreen;
+
+                    // Thêm vào giỏ ngay, không đóng popup
+                    ShowVariantPicker(productId);
+
+                    // Reset lại sau 1.5 giây để quét tiếp
+                    var timer = new System.Windows.Forms.Timer();
+                    timer.Interval = 1500;
+                    timer.Tick += (ts, te) =>
+                    {
+                        timer.Stop();
+                        lblIcon.Text = "📷";
+                        lblStatus.Text = "Đang chờ quét mã...";
+                        lblStatus.ForeColor = Color.RoyalBlue;
+                        lblResult.Text = "";
+                        txtScan.Focus(); // sẵn sàng quét tiếp
+                    };
+                    timer.Start();
+                }
+                catch (Exception ex)
+                {
+                    lblStatus.Text = "Lỗi: " + ex.Message;
+                    lblStatus.ForeColor = Color.Red;
+                }
+
+                ev.Handled = true;
+                ev.SuppressKeyPress = true;
+            };
+
+            popup.Controls.Add(lblIcon);
+            popup.Controls.Add(lblStatus);
+            popup.Controls.Add(lblResult);
+            popup.Controls.Add(txtScan);
+            popup.Controls.Add(btnClose);
+
+            popup.Shown += (s, ev) => txtScan.Focus(); // focus ngay khi popup mở
+            popup.ShowDialog(this);
+        }
+
+        private void lblCustomerTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
