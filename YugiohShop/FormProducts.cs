@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,7 +64,7 @@ namespace YugiohShop
             lblName.Location = new Point(10, 160);
             lblName.Width = 160;
             lblName.Height = 35;
-            lblName.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblName.Font = new Font("Be Vietnam Pro", 10, FontStyle.Bold);
 
             Label lblCategory = new Label();
             lblCategory.Text = "Loại: " + category;
@@ -77,7 +78,7 @@ namespace YugiohShop
             lblPrice.Width = 160;
             lblPrice.Height = 20;
             lblPrice.ForeColor = Color.Red;
-            lblPrice.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            lblPrice.Font = new Font("Be Vietnam Pro", 9, FontStyle.Bold);
 
             Label lblStock = new Label();
             lblStock.Text = "Tồn kho: " + stock;
@@ -117,17 +118,16 @@ namespace YugiohShop
                 ClearProductSelection();
                 flpProducts.Controls.Clear();
 
-                // MỚI - dùng cái này
-string sql = @"
-    SELECT 
-        p.ProductId, p.Code, p.Name, p.CardCode, p.Category, 
-        ISNULL(p.ImagePath, '') AS ImagePath,
-        p.IsActive,
-        ISNULL(SUM(v.Stock), 0)     AS TotalStock,
-        ISNULL(MIN(v.SellPrice), 0) AS MinPrice
-    FROM Products p
-    LEFT JOIN ProductVariants v ON p.ProductId = v.ProductId
-    WHERE 1 = 1";
+                string sql = @"
+                    SELECT 
+                        p.ProductId, p.Code, p.Name, p.CardCode, p.Category, 
+                        ISNULL(p.ImagePath, '') AS ImagePath,
+                        p.IsActive,
+                        ISNULL(SUM(v.Stock), 0)     AS TotalStock,
+                        ISNULL(MIN(v.SellPrice), 0) AS MinPrice
+                    FROM Products p
+                    LEFT JOIN ProductVariants v ON p.ProductId = v.ProductId
+                    WHERE 1 = 1";
 
                 if (!string.IsNullOrWhiteSpace(keyword))
                 {
@@ -141,9 +141,8 @@ string sql = @"
                     sql += $" AND p.Category = N'{category}'";
                 }
 
-                // Thêm GROUP BY vào cuối — BẮT BUỘC vì có SUM/MIN
                 sql += @" GROUP BY p.ProductId, p.Code, p.Name, p.CardCode, p.Category, p.ImagePath, p.IsActive";
-                sql += @" ORDER BY p.ProductId DESC";
+                sql += @" ORDER BY p.Name ASC";
 
                 DataTable dt = DbHelper.Query(sql);
 
@@ -167,6 +166,7 @@ string sql = @"
                 MessageBox.Show("Lỗi load sản phẩm: " + ex.Message);
             }
         }
+
         private void txtSearchProduct_TextChanged(object sender, EventArgs e)
         {
             string keyword = txtSearchProduct.Text.Trim();
@@ -177,8 +177,6 @@ string sql = @"
 
         private void btnClearFilter_Click(object sender, EventArgs e)
         {
-            SetActiveNavButton(btnAddProduct);
-
             txtSearchProduct.Text = "";
             cbCategoryFilter.SelectedIndex = 0;
             LoadProductsFromDb();
@@ -186,12 +184,12 @@ string sql = @"
 
         private void btnRefreshProduct_Click(object sender, EventArgs e)
         {
+            SetActiveNavButton(btnRefreshProduct);
             txtSearchProduct.Text = "";
             cbCategoryFilter.SelectedIndex = 0;
 
             ClearProductSelection();
             LoadProductsFromDb("", "Tất cả");
-
         }
 
         private void cbCategoryFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -212,11 +210,13 @@ string sql = @"
             {
                 LoadProductsFromDb(txtSearchProduct.Text.Trim(), cbCategoryFilter.Text);
             }
+
+            SetActiveNavButton(null);
         }
 
         private void btnEditProduct_Click(object sender, EventArgs e)
         {
-            SetActiveNavButton(btnAddProduct);
+            SetActiveNavButton(btnEditProduct);
 
             if (selectedProductIds.Count == 0)
             {
@@ -237,11 +237,13 @@ string sql = @"
                 ClearProductSelection();
                 LoadProductsFromDb(txtSearchProduct.Text.Trim(), cbCategoryFilter.Text);
             }
+
+            SetActiveNavButton(null);
         }
 
         private void btnDeleteProduct_Click(object sender, EventArgs e)
         {
-            SetActiveNavButton(btnAddProduct);
+            SetActiveNavButton(btnDeleteProduct);
 
             if (selectedProductIds.Count == 0)
             {
@@ -282,6 +284,8 @@ string sql = @"
                     MessageBox.Show("Lỗi xóa sản phẩm: " + ex.Message);
                 }
             }
+
+            SetActiveNavButton(null);
         }
 
         private void ProductCard_Click(object sender, EventArgs e)
@@ -294,12 +298,11 @@ string sql = @"
             int productId = Convert.ToInt32(card.Tag);
             bool alreadySelected = selectedProductIds.Contains(productId);
 
-            // Nếu không giữ Ctrl thì chỉ chọn 1
             if ((ModifierKeys & Keys.Control) != Keys.Control)
             {
                 if (alreadySelected && selectedProductIds.Count == 1)
                 {
-                    ClearProductSelection(); // click lại để bỏ chọn
+                    ClearProductSelection(); 
                     return;
                 }
 
@@ -310,7 +313,6 @@ string sql = @"
                 return;
             }
 
-            // Nếu giữ Ctrl thì chọn nhiều
             if (alreadySelected)
             {
                 selectedProductIds.Remove(productId);
@@ -339,43 +341,37 @@ string sql = @"
             selectedProductIds.Clear();
         }
 
-        private void SetActiveNavButton(Guna.UI2.WinForms.Guna2Button btn)
+        private void SetActiveNavButton(Guna2Button btn)
         {
-            // Danh sách tất cả nav button bên trái
-            var navBtns = new[]
-            {
-        btnAddProduct,
-        btnEditProduct,
-        btnDeleteProduct,
-        btnRefreshProduct
-    };
+            var navBtns = new[] { btnAddProduct, btnEditProduct, btnDeleteProduct, btnRefreshProduct };
 
-            // Reset tất cả về mặc định
             foreach (var b in navBtns)
             {
                 b.FillColor = Color.Transparent;
-                b.ForeColor = Color.Black;
+                b.ForeColor = Color.DimGray;
                 b.Image = GetNavIcon(b, isActive: false);
             }
 
-            // Set active
-            _activeNavBtn = btn;
-            btn.FillColor = Color.FromArgb(26, 115, 232);
-            btn.ForeColor = Color.White;
-            btn.Image = GetNavIcon(btn, isActive: true);
+            if (btn != null)
+            {
+                _activeNavBtn = btn;
+                btn.FillColor = Color.FromArgb(235, 242, 255);
+                btn.ForeColor = Color.RoyalBlue;               
+                btn.Image = GetNavIcon(btn, isActive: true);  
+            }
         }
 
-        private Image GetNavIcon(Guna.UI2.WinForms.Guna2Button btn, bool isActive)
+        private Image GetNavIcon(Guna2Button btn, bool isActive)
         {
             string iconDir = Path.GetFullPath(Path.Combine(Application.StartupPath, "..", "..", "..", "icons"));
-            string suffix = isActive ? "white" : "black";
+            string suffix = isActive ? "RoyalBlue" : "DimGray";
 
             string fileName = btn.Name switch
             {
                 "btnAddProduct" => $"add_box_{suffix}.png",
                 "btnEditProduct" => $"edit_{suffix}.png",
                 "btnDeleteProduct" => $"delete_{suffix}.png",
-                "btnRefresh" => $"refresh_{suffix}.png",
+                "btnRefreshProduct" => $"refresh_{suffix}.png",
                 _ => ""
             };
 
@@ -385,14 +381,22 @@ string sql = @"
 
         private void InitNavButtons()
         {
-            string dir = Path.GetFullPath(Path.Combine(Application.StartupPath, "..", "..", "..", "icons"));
+            var navBtns = new[] { btnAddProduct, btnEditProduct, btnDeleteProduct, btnRefreshProduct };
 
-            // Set icon đen mặc định cho tất cả
-            btnAddProduct.Image = Image.FromFile(Path.Combine(dir, "add_box_black.png"));
-            btnEditProduct.Image = Image.FromFile(Path.Combine(dir, "edit_black.png"));
-            btnDeleteProduct.Image = Image.FromFile(Path.Combine(dir, "delete_black.png"));
-            btnRefreshProduct.Image = Image.FromFile(Path.Combine(dir, "refresh_black.png"));
+            foreach (var b in navBtns)
+            {
+                b.CheckedState.FillColor = Color.Empty;
+                b.CheckedState.ForeColor = Color.Empty;
+
+                b.HoverState.FillColor = Color.FromArgb(242, 245, 250);
+                b.HoverState.ForeColor = Color.DimGray;
+
+                b.FillColor = Color.Transparent;
+                b.ForeColor = Color.DimGray;
+                b.BorderThickness = 0;
+                b.BorderColor = Color.Transparent;
+                b.Image = GetNavIcon(b, isActive: false);
+            }
         }
-
     }
 }

@@ -85,12 +85,12 @@ namespace YugiohShop
             }
         }
 
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                // --- Validate ---
+                dgvVariants.EndEdit();
+
                 string code = txtCode.Text.Trim().Replace("'", "''");
                 string cardCode = txtCardCode.Text.Trim().Replace("'", "''");
                 string name = txtName.Text.Trim().Replace("'", "''");
@@ -107,13 +107,31 @@ namespace YugiohShop
                     return;
                 }
 
-                if (dgvVariants.Rows.Count == 0)
+                int variantCount = dgvVariants.Rows
+                    .Cast<DataGridViewRow>()
+                    .Count(r => !r.IsNewRow);
+
+                if (variantCount == 0)
                 {
-                    MessageBox.Show("Vui lòng thêm ít nhất 1 variant (độ hiếm)!");
+                    MessageBox.Show("Vui lòng thêm ít nhất 1 variant!");
                     return;
                 }
 
-                // --- Lưu Products ---
+                foreach (DataGridViewRow row in dgvVariants.Rows)
+                {
+                    if (row.IsNewRow) continue;
+
+                    decimal sellPrice = decimal.TryParse(row.Cells["SellPrice"].Value?.ToString(), out var sp) ? sp : 0;
+                    decimal costPrice = decimal.TryParse(row.Cells["CostPrice"].Value?.ToString(), out var cp) ? cp : 0;
+                    int stock = int.TryParse(row.Cells["Stock"].Value?.ToString(), out var st) ? st : 0;
+
+                    if (sellPrice < 0 || costPrice < 0 || stock < 0)
+                    {
+                        MessageBox.Show("Giá bán, Giá vốn và Tồn kho KHÔNG ĐƯỢC LÀ SỐ ÂM!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return; 
+                    }
+                }
+
                 int productId;
                 if (editingProductId == null)
                 {
@@ -138,7 +156,6 @@ namespace YugiohShop
                     DbHelper.Execute($"DELETE FROM ProductVariants WHERE ProductId = {productId}");
                 }
 
-                // --- Lưu Variants ---
                 foreach (DataGridViewRow row in dgvVariants.Rows)
                 {
                     string rarity = row.Cells["Rarity"].Value?.ToString() ?? "";
@@ -223,11 +240,6 @@ namespace YugiohShop
             }
         }
 
-        private void btnCancel_TextChanged(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void btnRemoveImage_Click(object sender, EventArgs e)
         {
             txtImagePath.Text = "";
@@ -249,7 +261,7 @@ namespace YugiohShop
                 picBarcode.Image = GenerateBarcode(cardCode);
                 picBarcode.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            catch {}
+            catch { }
         }
 
         private Bitmap GenerateBarcode(string content)
@@ -262,7 +274,7 @@ namespace YugiohShop
                     Height = 80,
                     Width = 300,
                     Margin = 4,
-                    PureBarcode = false // hiển thị text bên dưới barcode
+                    PureBarcode = false 
                 }
             };
 
@@ -295,7 +307,6 @@ namespace YugiohShop
 
             try
             {
-                // Lưu vào thư mục project thay vì bin\Debug
                 string projectDir = Path.GetFullPath(
                     Path.Combine(Application.StartupPath, "..", "..", ".."));
 
@@ -316,24 +327,9 @@ namespace YugiohShop
             }
         }
 
-        // Load combobox mới khi form mở
-        private void LoadEditorComboboxes()
-        {
-            cbAttribute.Items.AddRange(new[] { "DARK", "LIGHT", "FIRE", "WATER", "EARTH", "WIND", "DIVINE" });
-            cbAttribute.SelectedIndex = -1;
-
-            cbCardType.Items.AddRange(new[] { "Monster", "Spell", "Trap" });
-            cbCardType.SelectedIndex = -1;
-
-            cbRarity.Items.AddRange(new[] {
-        "Common", "Rare", "Super Rare", "Ultra Rare",
-        "Secret Rare", "Prismatic Secret Rare"
-    });
-            cbRarity.SelectedIndex = -1;
-        }
-
         private void SetupVariantGrid()
         {
+            dgvVariants.AllowUserToAddRows = false;
             dgvVariants.Columns.Clear();
             dgvVariants.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -373,22 +369,50 @@ namespace YugiohShop
 
             dgvVariants.ClearSelection();
 
+            dgvVariants.CellValidating -= dgvVariants_CellValidating;
+            dgvVariants.CellValidating += dgvVariants_CellValidating;
         }
-        // Thêm 1 dòng variant mới
+
+        private void dgvVariants_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (dgvVariants.Rows[e.RowIndex].IsNewRow) return;
+
+            string colName = dgvVariants.Columns[e.ColumnIndex].Name;
+
+            if (colName == "Stock" || colName == "SellPrice" || colName == "CostPrice")
+            {
+                if (decimal.TryParse(e.FormattedValue.ToString(), out decimal val) && val < 0)
+                {
+                    MessageBox.Show("Cấm nhập số âm! Vui lòng sửa lại.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    e.Cancel = true; 
+                }
+            }
+        }
+
         private void btnAddVariant_Click(object sender, EventArgs e)
         {
-            if (cbRarity.SelectedIndex == -1)
+            string category = cbCategory.Text.Trim();
+            bool needRarity = category == "SingleCard";
+
+            string rarity = cbRarity.SelectedIndex == -1 ? "" : cbRarity.Text.Trim();
+
+            if (needRarity && string.IsNullOrWhiteSpace(rarity))
             {
-                MessageBox.Show("Chọn độ hiếm trước!");
+                MessageBox.Show("SingleCard phải chọn độ hiếm trước!");
                 return;
             }
 
-            string rarity = cbRarity.Text;
+            if (!needRarity && string.IsNullOrWhiteSpace(rarity))
+            {
+                rarity = "Default";
+            }
 
-            // Kiểm tra trùng rarity
             foreach (DataGridViewRow r in dgvVariants.Rows)
             {
-                if (r.Cells["Rarity"].Value?.ToString() == rarity)
+                if (r.IsNewRow) continue;
+
+                string existingRarity = r.Cells["Rarity"].Value?.ToString() ?? "";
+                if (existingRarity == rarity)
                 {
                     MessageBox.Show($"Đã có variant '{rarity}' rồi!");
                     return;
@@ -399,7 +423,6 @@ namespace YugiohShop
             cbRarity.SelectedIndex = -1;
         }
 
-        // Xóa dòng đang chọn
         private void btnDeleteVariant_Click(object sender, EventArgs e)
         {
             if (dgvVariants.Rows.Count == 0 || dgvVariants.CurrentRow == null || dgvVariants.CurrentRow.Index < 0)
@@ -411,5 +434,20 @@ namespace YugiohShop
             dgvVariants.Rows.RemoveAt(dgvVariants.CurrentRow.Index);
         }
 
+        private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool isSingleCard = cbCategory.Text == "SingleCard";
+
+            cbRarity.Enabled = isSingleCard;
+            cbAttribute.Enabled = isSingleCard;
+            cbCardType.Enabled = isSingleCard;
+
+            if (!isSingleCard)
+            {
+                cbRarity.SelectedIndex = -1;
+                cbAttribute.SelectedIndex = -1;
+                cbCardType.SelectedIndex = -1;
+            }
+        }
     }
 }

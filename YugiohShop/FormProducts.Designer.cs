@@ -127,6 +127,7 @@
             cbCategoryFilter.CustomizableEdges = customizableEdges3;
             cbCategoryFilter.DrawMode = DrawMode.OwnerDrawFixed;
             cbCategoryFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbCategoryFilter.FillColor = Color.WhiteSmoke;
             cbCategoryFilter.FocusedColor = Color.FromArgb(94, 148, 255);
             cbCategoryFilter.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             cbCategoryFilter.Font = new Font("Segoe UI", 10F);
@@ -155,13 +156,14 @@
             txtSearchProduct.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             txtSearchProduct.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtSearchProduct.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtSearchProduct.FillColor = Color.FromArgb(241, 245, 249);
+            txtSearchProduct.FillColor = Color.WhiteSmoke;
             txtSearchProduct.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtSearchProduct.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtSearchProduct.ForeColor = Color.FromArgb(30, 41, 59);
             txtSearchProduct.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             txtSearchProduct.IconLeft = (Image)resources.GetObject("txtSearchProduct.IconLeft");
             txtSearchProduct.Location = new Point(16, 11);
+            txtSearchProduct.Multiline = true;
             txtSearchProduct.Name = "txtSearchProduct";
             txtSearchProduct.PlaceholderText = "";
             txtSearchProduct.SelectedText = "";
@@ -169,6 +171,7 @@
             txtSearchProduct.ShadowDecoration.Shadow = new Padding(0, 2, 0, 2);
             txtSearchProduct.Size = new Size(282, 36);
             txtSearchProduct.TabIndex = 0;
+            txtSearchProduct.TextOffset = new Point(0, 2);
             txtSearchProduct.TextChanged += txtSearchProduct_TextChanged;
             // 
             // flpProducts
@@ -186,7 +189,6 @@
             // 
             btnRefreshProduct.BackColor = Color.Transparent;
             btnRefreshProduct.BorderRadius = 5;
-            btnRefreshProduct.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             btnRefreshProduct.Cursor = Cursors.Hand;
             btnRefreshProduct.CustomizableEdges = customizableEdges9;
             btnRefreshProduct.DisabledState.BorderColor = Color.DarkGray;
@@ -199,7 +201,7 @@
             btnRefreshProduct.HoverState.FillColor = Color.FromArgb(59, 130, 246);
             btnRefreshProduct.Image = (Image)resources.GetObject("btnRefreshProduct.Image");
             btnRefreshProduct.ImageAlign = HorizontalAlignment.Left;
-            btnRefreshProduct.Location = new Point(34, 173);
+            btnRefreshProduct.Location = new Point(28, 258);
             btnRefreshProduct.Margin = new Padding(2);
             btnRefreshProduct.Name = "btnRefreshProduct";
             btnRefreshProduct.ShadowDecoration.CustomizableEdges = customizableEdges10;
@@ -207,6 +209,7 @@
             btnRefreshProduct.TabIndex = 3;
             btnRefreshProduct.Text = "Làm mới";
             btnRefreshProduct.TextAlign = HorizontalAlignment.Left;
+            btnRefreshProduct.TextOffset = new Point(0, -3);
             btnRefreshProduct.Click += btnRefreshProduct_Click;
             // 
             // btnEditProduct
@@ -214,7 +217,6 @@
             btnEditProduct.BackColor = Color.Transparent;
             btnEditProduct.BorderColor = Color.Empty;
             btnEditProduct.BorderRadius = 5;
-            btnEditProduct.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             btnEditProduct.Cursor = Cursors.Hand;
             btnEditProduct.CustomizableEdges = customizableEdges11;
             btnEditProduct.DisabledState.BorderColor = Color.DarkGray;
@@ -227,7 +229,7 @@
             btnEditProduct.HoverState.FillColor = Color.FromArgb(59, 130, 246);
             btnEditProduct.Image = (Image)resources.GetObject("btnEditProduct.Image");
             btnEditProduct.ImageAlign = HorizontalAlignment.Left;
-            btnEditProduct.Location = new Point(34, 98);
+            btnEditProduct.Location = new Point(28, 135);
             btnEditProduct.Margin = new Padding(2);
             btnEditProduct.Name = "btnEditProduct";
             btnEditProduct.ShadowDecoration.CustomizableEdges = customizableEdges12;
@@ -235,6 +237,7 @@
             btnEditProduct.TabIndex = 2;
             btnEditProduct.Text = "Sửa SP";
             btnEditProduct.TextAlign = HorizontalAlignment.Left;
+            btnEditProduct.TextOffset = new Point(0, -3);
             btnEditProduct.Click += btnEditProduct_Click;
             // 
             // btnAddProduct
@@ -242,7 +245,6 @@
             btnAddProduct.BackColor = Color.Transparent;
             btnAddProduct.BorderColor = Color.Empty;
             btnAddProduct.BorderRadius = 5;
-            btnAddProduct.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             btnAddProduct.Cursor = Cursors.Hand;
             btnAddProduct.CustomizableEdges = customizableEdges13;
             btnAddProduct.DisabledState.BorderColor = Color.DarkGray;
@@ -255,7 +257,7 @@
             btnAddProduct.HoverState.FillColor = Color.FromArgb(59, 130, 246);
             btnAddProduct.Image = (Image)resources.GetObject("btnAddProduct.Image");
             btnAddProduct.ImageAlign = HorizontalAlignment.Left;
-            btnAddProduct.Location = new Point(34, 63);
+            btnAddProduct.Location = new Point(28, 78);
             btnAddProduct.Margin = new Padding(2);
             btnAddProduct.Name = "btnAddProduct";
             btnAddProduct.ShadowDecoration.CustomizableEdges = customizableEdges14;
@@ -263,13 +265,13 @@
             btnAddProduct.TabIndex = 0;
             btnAddProduct.Text = "Thêm SP";
             btnAddProduct.TextAlign = HorizontalAlignment.Left;
+            btnAddProduct.TextOffset = new Point(0, -3);
             btnAddProduct.Click += btnAddProduct_Click;
             // 
             // btnDeleteProduct
             // 
             btnDeleteProduct.BackColor = Color.Transparent;
             btnDeleteProduct.BorderRadius = 5;
-            btnDeleteProduct.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
             btnDeleteProduct.Cursor = Cursors.Hand;
             btnDeleteProduct.CustomizableEdges = customizableEdges15;
             btnDeleteProduct.DisabledState.BorderColor = Color.DarkGray;
@@ -282,7 +284,7 @@
             btnDeleteProduct.HoverState.FillColor = Color.FromArgb(59, 130, 246);
             btnDeleteProduct.Image = (Image)resources.GetObject("btnDeleteProduct.Image");
             btnDeleteProduct.ImageAlign = HorizontalAlignment.Left;
-            btnDeleteProduct.Location = new Point(34, 136);
+            btnDeleteProduct.Location = new Point(28, 198);
             btnDeleteProduct.Margin = new Padding(2);
             btnDeleteProduct.Name = "btnDeleteProduct";
             btnDeleteProduct.ShadowDecoration.CustomizableEdges = customizableEdges16;
@@ -290,6 +292,7 @@
             btnDeleteProduct.TabIndex = 1;
             btnDeleteProduct.Text = "Xóa SP";
             btnDeleteProduct.TextAlign = HorizontalAlignment.Left;
+            btnDeleteProduct.TextOffset = new Point(0, -3);
             btnDeleteProduct.Click += btnDeleteProduct_Click;
             // 
             // lblMenuProducts

@@ -43,15 +43,22 @@ namespace YugiohShop
 
         private void txtPassword_Enter(object sender, EventArgs e)
         {
-
+            if (txtPassword.Text == "Mật khẩu")
+            {
+                txtPassword.Text = "";
+                txtPassword.ForeColor = Color.Black;
+                // Bật che mật khẩu bằng dấu chấm tròn
+                txtPassword.PasswordChar = '●';
+                txtPassword.UseSystemPasswordChar = false;
+            }
         }
 
         private void txtPassword_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                // Khi rỗng: tắt ẩn để hiện placeholder text
-                txtPassword.UseSystemPasswordChar = false;
+                // Tắt che mật khẩu để hiện chữ mờ
+                txtPassword.PasswordChar = '\0';
                 txtPassword.Text = "Mật khẩu";
                 txtPassword.ForeColor = Color.Gray;
             }
@@ -110,9 +117,14 @@ namespace YugiohShop
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            txtPassword.UseSystemPasswordChar = true;
-            txtPassword.Text = "";
-            txtPassword.ForeColor = Color.Black;
+            txtPassword.UseSystemPasswordChar = false;
+            txtPassword.PasswordChar = '\0';           
+            txtPassword.Text = "Mật khẩu";
+            txtPassword.ForeColor = Color.Gray;
+
+            string pathMatNham = @"D:\YuGiOhShop\YugiohShop\YugiohShop\icons\visibility_off_darkgray.png";
+            txtPassword.IconRight = Image.FromFile(pathMatNham);
+            txtPassword.IconRightCursor = Cursors.Hand;
 
             PanelLogin.Location = new Point(
                 (this.ClientSize.Width - PanelLogin.Width) / 2,
@@ -129,6 +141,35 @@ namespace YugiohShop
         private void guna2HtmlLabel4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtPassword_IconRightClick(object sender, EventArgs e)
+        {
+            if (txtPassword.Text == "Mật khẩu") return;
+
+            string pathMatMo = @"D:\YuGiOhShop\YugiohShop\YugiohShop\icons\visibility_darkgray.png";
+            string pathMatNham = @"D:\YuGiOhShop\YugiohShop\YugiohShop\icons\visibility_off_darkgray.png";
+
+            if (txtPassword.PasswordChar == '●')
+            {
+                txtPassword.PasswordChar = '\0';
+                txtPassword.IconRight = Image.FromFile(pathMatMo);
+            }
+            else
+            {
+                txtPassword.PasswordChar = '●';
+                txtPassword.IconRight = Image.FromFile(pathMatNham);
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát hoàn toàn phần mềm?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

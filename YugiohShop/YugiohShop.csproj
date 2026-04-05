@@ -31,9 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="ClosedXML.Parser" Version="2.0.0" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
-    <PackageReference Include="ScottPlot.WinForms" Version="5.1.57" />
+    <PackageReference Include="payOS" Version="2.1.0" />
+    <PackageReference Include="ScottPlot.WinForms" Version="5.1.58" />
     <PackageReference Include="ZXing.Net" Version="0.16.11" />
   </ItemGroup>
 

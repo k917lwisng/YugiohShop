@@ -26,8 +26,23 @@ namespace YugiohShop
 
             UpdateDateNow();
 
-            OpenChildForm(new FormDashboard(), "Dashboard", btnDashboard);
+            if (cboDateRange.Items.Count == 0)
+            {
+                cboDateRange.Items.AddRange(new[] { "Hôm nay", "7 ngày", "Tháng này", "Tháng trước" });
+                cboDateRange.SelectedIndex = 2; 
+            }
 
+
+            if (CurrentUser.Role != null && (CurrentUser.Role.ToLower() == "staff"))
+            {
+                OpenChildForm(new FormSales(), "Bán hàng", btnSales);
+                cboDateRange.Visible = false;
+            }
+            else
+            {
+                OpenChildForm(new FormDashboard(), "Dashboard", btnDashboard);
+                cboDateRange.Visible = true;
+            }
         }
 
         private void UpdateDateNow()
@@ -55,9 +70,8 @@ namespace YugiohShop
 
         private void SetActiveButton(Guna2Button btn)
         {
-            Guna2Button[] navBtns = { btnProducts, btnCustomers, btnSales, btnStatistics, btnDashboard };
+            Guna2Button[] navBtns = { btnProducts, btnCustomers, btnSales, btnOrderHistory, btnStatistics, btnDashboard };
 
-            // Reset tất cả về trạng thái ban đầu
             foreach (var b in navBtns)
             {
                 b.FillColor = Color.Transparent;
@@ -65,11 +79,10 @@ namespace YugiohShop
                 b.Image = GetIcon(b, isActive: false);
             }
 
-            // Active button
             _activeBtn = btn;
-            btn.FillColor = Color.FromArgb(235, 242, 255);        // xanh nhạt nền
-            btn.ForeColor = Color.RoyalBlue;                       // chữ royal blue
-            btn.Image = GetIcon(btn, isActive: true);              // icon đổi sang royal blue
+            btn.FillColor = Color.FromArgb(235, 242, 255);       
+            btn.ForeColor = Color.RoyalBlue;                       
+            btn.Image = GetIcon(btn, isActive: true);              
 
             leftPanel.Invalidate();
         }
@@ -85,6 +98,7 @@ namespace YugiohShop
                 "btnProducts" => $"box_{suffix}.png",
                 "btnCustomers" => $"contact_{suffix}.png",
                 "btnSales" => $"shopping_cart_{suffix}.png",
+                "btnOrderHistory" => $"receipt_long_{suffix}.png",
                 "btnStatistics" => $"report_{suffix}.png",
                 "btnLogout" => $"logout_{suffix}.png",
                 "btnDashboard" => $"dashboard_{suffix}.png",
@@ -106,6 +120,12 @@ namespace YugiohShop
 
         private void btnProducts_Click(object sender, EventArgs e)
         {
+            if (CurrentUser.Role != null && (CurrentUser.Role.ToLower() == "staff" || CurrentUser.Role.ToLower() == "nhân viên"))
+            {
+                MessageBox.Show("Rất tiếc! Bạn không có quyền truy cập vào chức năng Quản lý Sản phẩm.", "Cảnh báo bảo mật", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            }
+
             cboDateRange.Visible = false;
 
             OpenChildForm(new FormProducts(), "Sản phẩm", btnProducts);
@@ -125,6 +145,12 @@ namespace YugiohShop
         }
         private void btnStatistics_Click(object sender, EventArgs e)
         {
+            if (CurrentUser.Role != null && (CurrentUser.Role.ToLower() == "staff" || CurrentUser.Role.ToLower() == "nhân viên"))
+            {
+                MessageBox.Show("Rất tiếc! Bạn không có quyền truy cập vào chức năng Thống kê.", "Cảnh báo bảo mật", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            }
+
             cboDateRange.Visible = false;
 
             OpenChildForm(new FormStatistics(), "Thống kê", btnStatistics);
@@ -143,30 +169,32 @@ namespace YugiohShop
         private void btnUser_Click(object sender, EventArgs e)
         {
             var menu = new ContextMenuStrip();
+
             menu.Items.Add("Đổi mật khẩu", null, (s, ev) =>
-                MessageBox.Show("Chức năng đổi mật khẩu (chưa làm)"));
+            {
+                new FormChangePassword().ShowDialog();
+            });
+
             menu.Items.Add("Đăng xuất", null, (s, ev) =>
             {
                 this.Hide();
                 new FormLogin().Show();
             });
+
             menu.Show(btnUser, 0, btnUser.Height);
         }
 
-        //private void panel1_Paint(object sender, PaintEventArgs e) { }
-        //private void panel2_Paint(object sender, PaintEventArgs e) { }
-
         private void btnDashboard_Click(object sender, EventArgs e)
         {
+            if (CurrentUser.Role != null && (CurrentUser.Role.ToLower() == "staff" || CurrentUser.Role.ToLower() == "nhân viên"))
+            {
+                MessageBox.Show("Rất tiếc! Bạn không có quyền truy cập vào chức năng Dashboard.", "Cảnh báo bảo mật", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             lblTitleControl.Text = "Dashboard";
 
-            // Show combobox và điền items nếu chưa có
             cboDateRange.Visible = true;
-            if (cboDateRange.Items.Count == 0)
-            {
-                cboDateRange.Items.AddRange(new[] { "Hôm nay", "7 ngày", "Tháng này", "Tháng trước" });
-                cboDateRange.SelectedIndex = 2; // mặc định Tháng này
-            }
 
             OpenChildForm(new FormDashboard(), "Dashboard");
             SetActiveButton(btnDashboard);
@@ -174,7 +202,6 @@ namespace YugiohShop
 
         private void cboDateRange_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Tìm FormDashboard đang active trong right panel rồi notify
             var dashboard = rightPanel.Controls
                 .OfType<FormDashboard>()
                 .FirstOrDefault();
@@ -182,5 +209,10 @@ namespace YugiohShop
             dashboard?.OnDateRangeChanged(cboDateRange.SelectedItem?.ToString());
         }
 
+        private void btnOrderHistory_Click(object sender, EventArgs e)
+        {
+            cboDateRange.Visible = false; 
+            OpenChildForm(new FormOrderHistory(), "Hóa đơn", btnOrderHistory);
+        }
     }
 }

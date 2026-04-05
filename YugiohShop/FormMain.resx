@@ -118,13 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnOrderHistory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAARdJREFUSEvd
+        lDFuwzAMRXOFbNmLTl0yZSvgoafI0KGD9Sl37xV6h9wk1+gtOnRoDpDAjqhSX7ZiuAmC5AGEDX2RFGnK
+        s9ldIJC9SDAnH6z/mxg8GOtnQ0R2mgTts6sMJjmO60Xz3xw34r1fJJtt67Jk4RDZO8odMEGfWSsREwEr
+        1hKapnnSzawNIdJ8Bp9f1nrRBN77JWt9xNatZc5aLyLyMrYKANuQ4Iu1IvrR6rp+YM0y9iAZ3rlXde4s
+        fHw7vnoIoN6w/0myebdjasdX5Id9TwLgbXLpY9Dg7cVj7SwkrUksvclsHGcQ59yjdbS/AQ5q1znO9QDe
+        q78RRMW60mqxysK+DG4B68rkFl08QduiMaVPbtFNcQD09VbRbLcAyAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="btnUser.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAMlJREFUSEvt
-        lMsNwjAQRGch4kApdEAP9EI5HFIMrXBIEVyioPEHO04sO8oqAilPGmll78frTQzs/BMvAIMTbT2ESYWJ
-        xRYwtpEKnUv6jNZoD2L31iJMNHdatS5yiXKFF+OHO7kizWH7LlKpYodtpTHcLbjgBOAB4D1zPVzjHn2W
-        0lwB9DbR9zM1iu0g6RuAMRUccE8StADOqZtba6O/mmJsEe98SzfyHOnr44pUOyZUx4WWx+0bhRmMH75o
-        NkUmBcJrmi8caefH+AAaqWpZZKGb2QAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAOpJREFUSEvt
+        k00KgzAQhV258EbeodtcoIs4byh4BW/hoofxKi48hBtpiRiNE4P1h5aCHwTCzOTNMI9E0cXfAKAG8BpO
+        LfOHoEl4dmTdLgBuBsFqiqEyMQaaefUOQtOG4psJCYXimxnNJX9Fp5k9mUyOyXR8ehcAjRHtm/EJ5n4F
+        pVQMcAmgBTl/oL9zy0CpChXLd6tk2T1loLO7XvZgdrp7lqVSZxF+cO4+JqKn1jqRdVoXicm5QzBzLus8
+        7CqI6CZzIUytHUjmPGwDGV/j8wbefl0PFuLCfKnnMa7IE3TirujQzN6l3sXveQM9TvrKOYF7cwAAAABJ
+        RU5ErkJggg==
 </value>
   </data>
   <data name="btnDashboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

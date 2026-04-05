@@ -20,6 +20,7 @@ namespace YugiohShop
         public FormCustomers()
         {
             InitializeComponent();
+            InitDgvCustomers();
         }
 
         private void FormCustomers_Load(object sender, EventArgs e)
@@ -33,10 +34,27 @@ namespace YugiohShop
             txtName.Text = "";
             txtName.ForeColor = Color.Black;
 
-                LoadCustomers("");
+            LoadCustomers("");
             ClearCustomerInputs();
 
             _suppressSearch = false;
+
+            CenterRightPanelControls(); 
+            PanelRight.Resize += (s, ev) => CenterRightPanelControls();
+        }
+
+        private void CenterRightPanelControls()
+        {
+            Control[] controlsToCenter = { lblTitleTTKH, txtPhone, txtName, btnAddCustomer, btnEditCustomer, btnDelete };
+
+            foreach (var ctrl in controlsToCenter)
+            {
+                ctrl.Left = (PanelRight.Width - ctrl.Width) / 2;
+            }
+
+            int totalPointsWidth = lblTitlePoints.Width + 10 + lblPoints.Width; // 10 là khoảng cách giữa 2 chữ
+            lblTitlePoints.Left = (PanelRight.Width - totalPointsWidth) / 2;
+            lblPoints.Left = lblTitlePoints.Right + 10;
         }
 
         private void LoadCustomers(string keyword = "")
@@ -77,6 +95,16 @@ namespace YugiohShop
             }
         }
 
+        private void InitDgvCustomers()
+        {
+            dgvCustomers.ColumnHeadersDefaultCellStyle.Font = new Font("Be Vietnam Pro", 10F, FontStyle.Bold);
+
+            dgvCustomers.DefaultCellStyle.Font = new Font("Be Vietnam Pro", 10F, FontStyle.Regular);
+
+            dgvCustomers.ColumnHeadersHeight = 45;
+            dgvCustomers.RowTemplate.Height = 40;
+        }
+
         private void ClearCustomerInputs()
         {
             selectedCustomerId = null;
@@ -94,7 +122,6 @@ namespace YugiohShop
 
             DataGridViewRow row = dgvCustomers.Rows[e.RowIndex];
 
-            // Kiểm tra null trước khi convert
             if (row.Cells["CustomerId"].Value == null || row.Cells["CustomerId"].Value == DBNull.Value) return;
 
             selectedCustomerId = Convert.ToInt32(row.Cells["CustomerId"].Value);
@@ -218,6 +245,53 @@ namespace YugiohShop
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (selectedCustomerId == null)
+                {
+                    MessageBox.Show("Vui lòng click chọn khách hàng cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int checkHistory = Convert.ToInt32(DbHelper.Query($@"
+                    SELECT COUNT(*) FROM SalesInvoices WHERE CustomerId = {selectedCustomerId.Value}
+                ").Rows[0][0]);
+
+                if (checkHistory > 0)
+                {
+                    MessageBox.Show("Khách hàng này đã có lịch sử mua hàng! Không thể xóa để đảm bảo toàn vẹn dữ liệu doanh thu.", "Từ chối xóa", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (MessageBox.Show($"Bạn có chắc chắn muốn xóa khách hàng '{txtName.Text}' vĩnh viễn không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    DbHelper.Execute($"DELETE FROM Customers WHERE CustomerId = {selectedCustomerId.Value}");
+
+                    MessageBox.Show("Xóa khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    _suppressSearch = true;
+                    txtSearchCustomer.Text = "";
+                    _suppressSearch = false;
+                    LoadCustomers("");
+                    ClearCustomerInputs();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xóa: " + ex.Message);
+            }
+        }
+
+        private void BlockInvalidInput_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -28,30 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges29 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges30 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges31 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges33 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges39 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges45 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges46 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges47 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges48 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             leftPanel = new Panel();
+            btnOrderHistory = new Guna.UI2.WinForms.Guna2Button();
             guna2Separator2 = new Guna.UI2.WinForms.Guna2Separator();
             lblHeThong = new Guna.UI2.WinForms.Guna2HtmlLabel();
             btnUser = new Guna.UI2.WinForms.Guna2Button();
@@ -69,10 +72,10 @@
             btnCustomers = new Guna.UI2.WinForms.Guna2Button();
             btnProducts = new Guna.UI2.WinForms.Guna2Button();
             topPanel = new Guna.UI2.WinForms.Guna2Panel();
+            cboDateRange = new Guna.UI2.WinForms.Guna2ComboBox();
             lblDateNow = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lblTitleControl = new Guna.UI2.WinForms.Guna2HtmlLabel();
             rightPanel = new Guna.UI2.WinForms.Guna2Panel();
-            cboDateRange = new Guna.UI2.WinForms.Guna2ComboBox();
             leftPanel.SuspendLayout();
             topPanel.SuspendLayout();
             SuspendLayout();
@@ -80,6 +83,7 @@
             // leftPanel
             // 
             leftPanel.BackColor = Color.White;
+            leftPanel.Controls.Add(btnOrderHistory);
             leftPanel.Controls.Add(guna2Separator2);
             leftPanel.Controls.Add(lblHeThong);
             leftPanel.Controls.Add(btnUser);
@@ -103,8 +107,33 @@
             leftPanel.Name = "leftPanel";
             leftPanel.Size = new Size(174, 708);
             leftPanel.TabIndex = 0;
-            leftPanel.Click += btnSales_Click;
             leftPanel.Paint += leftPanel_Paint;
+            // 
+            // btnOrderHistory
+            // 
+            btnOrderHistory.Anchor = AnchorStyles.None;
+            btnOrderHistory.BackColor = Color.Transparent;
+            btnOrderHistory.BorderRadius = 5;
+            btnOrderHistory.Cursor = Cursors.Hand;
+            btnOrderHistory.CustomizableEdges = customizableEdges25;
+            btnOrderHistory.DisabledState.BorderColor = Color.DarkGray;
+            btnOrderHistory.DisabledState.CustomBorderColor = Color.DarkGray;
+            btnOrderHistory.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btnOrderHistory.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnOrderHistory.FillColor = Color.Empty;
+            btnOrderHistory.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
+            btnOrderHistory.ForeColor = Color.DimGray;
+            btnOrderHistory.Image = (Image)resources.GetObject("btnOrderHistory.Image");
+            btnOrderHistory.ImageAlign = HorizontalAlignment.Left;
+            btnOrderHistory.Location = new Point(12, 279);
+            btnOrderHistory.Name = "btnOrderHistory";
+            btnOrderHistory.Padding = new Padding(10, 0, 0, 0);
+            btnOrderHistory.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            btnOrderHistory.Size = new Size(119, 23);
+            btnOrderHistory.TabIndex = 21;
+            btnOrderHistory.Text = "Hóa đơn";
+            btnOrderHistory.TextAlign = HorizontalAlignment.Left;
+            btnOrderHistory.Click += btnOrderHistory_Click;
             // 
             // guna2Separator2
             // 
@@ -120,7 +149,7 @@
             lblHeThong.BackColor = Color.Transparent;
             lblHeThong.Font = new Font("Be Vietnam Pro", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblHeThong.ForeColor = Color.DarkGray;
-            lblHeThong.Location = new Point(12, 363);
+            lblHeThong.Location = new Point(12, 386);
             lblHeThong.Name = "lblHeThong";
             lblHeThong.Size = new Size(63, 19);
             lblHeThong.TabIndex = 19;
@@ -132,20 +161,20 @@
             btnUser.BackColor = Color.Transparent;
             btnUser.BorderRadius = 5;
             btnUser.Cursor = Cursors.Hand;
-            btnUser.CustomizableEdges = customizableEdges1;
+            btnUser.CustomizableEdges = customizableEdges27;
             btnUser.DisabledState.BorderColor = Color.DarkGray;
             btnUser.DisabledState.CustomBorderColor = Color.DarkGray;
             btnUser.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnUser.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btnUser.FillColor = Color.Empty;
-            btnUser.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnUser.ForeColor = Color.Black;
+            btnUser.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
+            btnUser.ForeColor = Color.DimGray;
             btnUser.Image = (Image)resources.GetObject("btnUser.Image");
             btnUser.ImageAlign = HorizontalAlignment.Left;
             btnUser.Location = new Point(12, 672);
             btnUser.Name = "btnUser";
             btnUser.Padding = new Padding(10, 0, 0, 0);
-            btnUser.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnUser.ShadowDecoration.CustomizableEdges = customizableEdges28;
             btnUser.Size = new Size(127, 24);
             btnUser.TabIndex = 10;
             btnUser.Text = "Người dùng";
@@ -158,7 +187,7 @@
             lblPhanTich.BackColor = Color.Transparent;
             lblPhanTich.Font = new Font("Be Vietnam Pro", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblPhanTich.ForeColor = Color.DarkGray;
-            lblPhanTich.Location = new Point(12, 288);
+            lblPhanTich.Location = new Point(12, 320);
             lblPhanTich.Name = "lblPhanTich";
             lblPhanTich.Size = new Size(65, 19);
             lblPhanTich.TabIndex = 18;
@@ -182,21 +211,21 @@
             btnDashboard.BackColor = Color.Transparent;
             btnDashboard.BorderRadius = 5;
             btnDashboard.Cursor = Cursors.Hand;
-            btnDashboard.CustomizableEdges = customizableEdges3;
-            btnDashboard.DisabledState.BorderColor = Color.DarkGray;
+            btnDashboard.CustomizableEdges = customizableEdges29;
+            btnDashboard.DisabledState.BorderColor = Color.Transparent;
             btnDashboard.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnDashboard.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnDashboard.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnDashboard.DisabledState.FillColor = Color.Transparent;
+            btnDashboard.DisabledState.ForeColor = Color.FromArgb(160, 174, 192);
             btnDashboard.FillColor = SystemColors.Window;
-            btnDashboard.Font = new Font("Be Vietnam Pro", 8.999999F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDashboard.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDashboard.ForeColor = Color.DimGray;
             btnDashboard.Image = (Image)resources.GetObject("btnDashboard.Image");
             btnDashboard.ImageAlign = HorizontalAlignment.Left;
             btnDashboard.Location = new Point(12, 126);
             btnDashboard.Name = "btnDashboard";
             btnDashboard.Padding = new Padding(10, 0, 0, 0);
-            btnDashboard.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btnDashboard.Size = new Size(119, 23);
+            btnDashboard.ShadowDecoration.CustomizableEdges = customizableEdges30;
+            btnDashboard.Size = new Size(130, 23);
             btnDashboard.TabIndex = 16;
             btnDashboard.Text = "Dashboard";
             btnDashboard.TextAlign = HorizontalAlignment.Left;
@@ -220,9 +249,9 @@
             ShopNameLogo.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ShopNameLogo.Location = new Point(54, 12);
             ShopNameLogo.Name = "ShopNameLogo";
-            ShopNameLogo.Size = new Size(88, 21);
+            ShopNameLogo.Size = new Size(97, 21);
             ShopNameLogo.TabIndex = 12;
-            ShopNameLogo.Text = "Yugioh Shop";
+            ShopNameLogo.Text = "VUATROICHO";
             ShopNameLogo.TextAlignment = ContentAlignment.MiddleCenter;
             // 
             // guna2HtmlLabel3
@@ -238,7 +267,7 @@
             // guna2Button1
             // 
             guna2Button1.BorderRadius = 8;
-            guna2Button1.CustomizableEdges = customizableEdges5;
+            guna2Button1.CustomizableEdges = customizableEdges31;
             guna2Button1.DisabledState.BorderColor = Color.DarkGray;
             guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
             guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -249,7 +278,7 @@
             guna2Button1.Image = (Image)resources.GetObject("guna2Button1.Image");
             guna2Button1.Location = new Point(12, 12);
             guna2Button1.Name = "guna2Button1";
-            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges32;
             guna2Button1.Size = new Size(36, 36);
             guna2Button1.TabIndex = 11;
             guna2Button1.TextAlign = HorizontalAlignment.Right;
@@ -267,20 +296,20 @@
             btnLogout.BackColor = Color.Transparent;
             btnLogout.BorderRadius = 5;
             btnLogout.Cursor = Cursors.Hand;
-            btnLogout.CustomizableEdges = customizableEdges7;
+            btnLogout.CustomizableEdges = customizableEdges33;
             btnLogout.DisabledState.BorderColor = Color.DarkGray;
             btnLogout.DisabledState.CustomBorderColor = Color.DarkGray;
             btnLogout.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnLogout.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btnLogout.FillColor = Color.Empty;
-            btnLogout.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
             btnLogout.ForeColor = Color.DimGray;
             btnLogout.Image = (Image)resources.GetObject("btnLogout.Image");
             btnLogout.ImageAlign = HorizontalAlignment.Left;
-            btnLogout.Location = new Point(12, 388);
+            btnLogout.Location = new Point(12, 411);
             btnLogout.Name = "btnLogout";
             btnLogout.Padding = new Padding(10, 0, 0, 0);
-            btnLogout.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnLogout.ShadowDecoration.CustomizableEdges = customizableEdges34;
             btnLogout.Size = new Size(119, 23);
             btnLogout.TabIndex = 9;
             btnLogout.Text = "Đăng xuất";
@@ -293,20 +322,20 @@
             btnSales.BackColor = Color.Transparent;
             btnSales.BorderRadius = 5;
             btnSales.Cursor = Cursors.Hand;
-            btnSales.CustomizableEdges = customizableEdges9;
+            btnSales.CustomizableEdges = customizableEdges35;
             btnSales.DisabledState.BorderColor = Color.DarkGray;
             btnSales.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSales.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnSales.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btnSales.FillColor = Color.Empty;
-            btnSales.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSales.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
             btnSales.ForeColor = Color.DimGray;
             btnSales.Image = (Image)resources.GetObject("btnSales.Image");
             btnSales.ImageAlign = HorizontalAlignment.Left;
             btnSales.Location = new Point(12, 250);
             btnSales.Name = "btnSales";
             btnSales.Padding = new Padding(10, 0, 0, 0);
-            btnSales.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnSales.ShadowDecoration.CustomizableEdges = customizableEdges36;
             btnSales.Size = new Size(119, 23);
             btnSales.TabIndex = 7;
             btnSales.Text = "Bán hàng";
@@ -319,20 +348,20 @@
             btnStatistics.BackColor = Color.Transparent;
             btnStatistics.BorderRadius = 5;
             btnStatistics.Cursor = Cursors.Hand;
-            btnStatistics.CustomizableEdges = customizableEdges11;
-            btnStatistics.DisabledState.BorderColor = Color.DarkGray;
+            btnStatistics.CustomizableEdges = customizableEdges37;
+            btnStatistics.DisabledState.BorderColor = Color.Transparent;
             btnStatistics.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnStatistics.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnStatistics.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnStatistics.DisabledState.FillColor = Color.Transparent;
+            btnStatistics.DisabledState.ForeColor = Color.FromArgb(160, 174, 192);
             btnStatistics.FillColor = Color.Empty;
-            btnStatistics.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnStatistics.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
             btnStatistics.ForeColor = Color.DimGray;
             btnStatistics.Image = (Image)resources.GetObject("btnStatistics.Image");
             btnStatistics.ImageAlign = HorizontalAlignment.Left;
-            btnStatistics.Location = new Point(12, 313);
+            btnStatistics.Location = new Point(12, 345);
             btnStatistics.Name = "btnStatistics";
             btnStatistics.Padding = new Padding(10, 0, 0, 0);
-            btnStatistics.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnStatistics.ShadowDecoration.CustomizableEdges = customizableEdges38;
             btnStatistics.Size = new Size(119, 23);
             btnStatistics.TabIndex = 8;
             btnStatistics.Text = "Thống kê";
@@ -345,21 +374,21 @@
             btnCustomers.BackColor = Color.Transparent;
             btnCustomers.BorderRadius = 5;
             btnCustomers.Cursor = Cursors.Hand;
-            btnCustomers.CustomizableEdges = customizableEdges13;
+            btnCustomers.CustomizableEdges = customizableEdges39;
             btnCustomers.DisabledState.BorderColor = Color.DarkGray;
             btnCustomers.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCustomers.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
             btnCustomers.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btnCustomers.FillColor = Color.Empty;
-            btnCustomers.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCustomers.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
             btnCustomers.ForeColor = Color.DimGray;
             btnCustomers.Image = (Image)resources.GetObject("btnCustomers.Image");
             btnCustomers.ImageAlign = HorizontalAlignment.Left;
             btnCustomers.Location = new Point(12, 221);
             btnCustomers.Name = "btnCustomers";
             btnCustomers.Padding = new Padding(10, 0, 0, 0);
-            btnCustomers.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            btnCustomers.Size = new Size(119, 23);
+            btnCustomers.ShadowDecoration.CustomizableEdges = customizableEdges40;
+            btnCustomers.Size = new Size(130, 23);
             btnCustomers.TabIndex = 6;
             btnCustomers.Text = "Khách hàng        ";
             btnCustomers.TextAlign = HorizontalAlignment.Left;
@@ -371,20 +400,20 @@
             btnProducts.BackColor = Color.Transparent;
             btnProducts.BorderRadius = 5;
             btnProducts.Cursor = Cursors.Hand;
-            btnProducts.CustomizableEdges = customizableEdges15;
-            btnProducts.DisabledState.BorderColor = Color.DarkGray;
+            btnProducts.CustomizableEdges = customizableEdges41;
+            btnProducts.DisabledState.BorderColor = Color.Transparent;
             btnProducts.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnProducts.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnProducts.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btnProducts.DisabledState.FillColor = Color.Transparent;
+            btnProducts.DisabledState.ForeColor = Color.FromArgb(160, 174, 192);
             btnProducts.FillColor = Color.Empty;
-            btnProducts.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnProducts.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Bold);
             btnProducts.ForeColor = Color.DimGray;
             btnProducts.Image = (Image)resources.GetObject("btnProducts.Image");
             btnProducts.ImageAlign = HorizontalAlignment.Left;
             btnProducts.Location = new Point(12, 192);
             btnProducts.Name = "btnProducts";
             btnProducts.Padding = new Padding(10, 0, 0, 0);
-            btnProducts.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            btnProducts.ShadowDecoration.CustomizableEdges = customizableEdges42;
             btnProducts.Size = new Size(119, 23);
             btnProducts.TabIndex = 5;
             btnProducts.Text = "Sản phẩm";
@@ -398,13 +427,37 @@
             topPanel.Controls.Add(cboDateRange);
             topPanel.Controls.Add(lblDateNow);
             topPanel.Controls.Add(lblTitleControl);
-            topPanel.CustomizableEdges = customizableEdges19;
+            topPanel.CustomizableEdges = customizableEdges45;
             topPanel.Dock = DockStyle.Top;
             topPanel.Location = new Point(174, 0);
             topPanel.Name = "topPanel";
-            topPanel.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            topPanel.ShadowDecoration.CustomizableEdges = customizableEdges46;
             topPanel.Size = new Size(822, 56);
             topPanel.TabIndex = 1;
+            // 
+            // cboDateRange
+            // 
+            cboDateRange.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            cboDateRange.BackColor = Color.Transparent;
+            cboDateRange.BorderColor = Color.RoyalBlue;
+            cboDateRange.BorderRadius = 8;
+            cboDateRange.BorderThickness = 2;
+            cboDateRange.CustomizableEdges = customizableEdges43;
+            cboDateRange.DrawMode = DrawMode.OwnerDrawFixed;
+            cboDateRange.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboDateRange.FillColor = Color.WhiteSmoke;
+            cboDateRange.FocusedColor = Color.FromArgb(94, 148, 255);
+            cboDateRange.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            cboDateRange.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cboDateRange.ForeColor = Color.DimGray;
+            cboDateRange.ItemHeight = 30;
+            cboDateRange.Location = new Point(641, 12);
+            cboDateRange.Name = "cboDateRange";
+            cboDateRange.ShadowDecoration.CustomizableEdges = customizableEdges44;
+            cboDateRange.Size = new Size(160, 36);
+            cboDateRange.TabIndex = 3;
+            cboDateRange.Visible = false;
+            cboDateRange.SelectedIndexChanged += cboDateRange_SelectedIndexChanged;
             // 
             // lblDateNow
             // 
@@ -432,37 +485,14 @@
             // 
             rightPanel.BackColor = Color.FromArgb(246, 248, 252);
             rightPanel.BorderRadius = 15;
-            rightPanel.CustomizableEdges = customizableEdges21;
+            rightPanel.CustomizableEdges = customizableEdges47;
             rightPanel.Dock = DockStyle.Fill;
             rightPanel.Location = new Point(174, 56);
             rightPanel.Name = "rightPanel";
             rightPanel.Padding = new Padding(12);
-            rightPanel.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            rightPanel.ShadowDecoration.CustomizableEdges = customizableEdges48;
             rightPanel.Size = new Size(822, 652);
             rightPanel.TabIndex = 2;
-            // 
-            // cboDateRange
-            // 
-            cboDateRange.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            cboDateRange.BackColor = Color.Transparent;
-            cboDateRange.BorderColor = Color.FromArgb(224, 224, 224);
-            cboDateRange.BorderRadius = 8;
-            cboDateRange.BorderThickness = 2;
-            cboDateRange.CustomizableEdges = customizableEdges17;
-            cboDateRange.DrawMode = DrawMode.OwnerDrawFixed;
-            cboDateRange.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboDateRange.FocusedColor = Color.FromArgb(94, 148, 255);
-            cboDateRange.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cboDateRange.Font = new Font("Be Vietnam Pro", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cboDateRange.ForeColor = Color.DimGray;
-            cboDateRange.ItemHeight = 30;
-            cboDateRange.Location = new Point(641, 12);
-            cboDateRange.Name = "cboDateRange";
-            cboDateRange.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            cboDateRange.Size = new Size(160, 36);
-            cboDateRange.TabIndex = 3;
-            cboDateRange.Visible = false;
-            cboDateRange.SelectedIndexChanged += cboDateRange_SelectedIndexChanged;
             // 
             // FormMain
             // 
@@ -509,5 +539,6 @@
         private Guna.UI2.WinForms.Guna2Separator guna2Separator2;
         private Guna.UI2.WinForms.Guna2Panel rightPanel;
         private Guna.UI2.WinForms.Guna2ComboBox cboDateRange;
+        private Guna.UI2.WinForms.Guna2Button btnOrderHistory;
     }
 }

@@ -117,4 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnCustomerTrendIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAU1JREFUSEvt
+        VFFKAzEQDQgV/PAmQn97Bv3NFRSaRBEzCiWzhF5CQegBPIF/vUo/eoj+lJXsJtlJsq27guhHHwSyLzPz
+        ZiaTZeyEfw0JuJWAtQKsJeAm8NzaiQRT8KPgAkvdBGiX38dzjZ9eIOEHwWXlHdeEW3tu6745/ziL4mAi
+        PwiHssr5vMrU+gh8RoVDHoi2qM/+ICRUI1uEtRjTIocuu7aavkvuBMzw7CmSMdVkTLkb05j9z8b016CU
+        Ohe6ehPa7Nq2+BY1VZjdPeCr5XZCfdydzbW5o1wBoZczCbgPwfIJ6bmPvdA4C/7EfqOUvUyCSzCPpNe1
+        fLarW2svEiPGmOMU4Hsi9mQemhgveEUrni8W0+gYHJSurmnAYxBgbkJlgcsrjsYFMRC537cC3Upnn+6L
+        91EIxL9sLtAdpIF6BOh06eTxJT5R4IQ/xRcPRpLOnm5Q9wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnStockQuantityIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAANpJREFUSEvl
+        VVsOgyAQ9LOpPZR3M9EjSdPD2YAu7GM2RUJ/2kk2Co4zzkJkGH4e23ybwjLuYR33eH2y+21+TJp/GWG5
+        JzGqZMBK8y+DRNF8NwMkFJMhYxex1zx+uT+EeFtQcc4LrY0mGdFzYY2omXeS0WKW8fGCZFmQqByD95oN
+        zgR57GwKI0gtkiwLm0B+aEazQX0CuTjJcAVEBWvgJpAPaIdIlgVqkZNARmtP4LRWJ6g2AAkcg68nkAbV
+        u0jxtE4GInY24D81eQaUqp/X+vjk+lCG0/Ok+x+8AdVWsZOLDNV9AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnTotalOrdersIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAPxJREFUSEvt
+        lLEKwjAQhrPoJDYugi+hQmch9xC+gquTS02hD+Lk0zj4Jg7dXSqNCWn+FHKtgyB+cLTc/XfXS48I8TPI
+        kjZS0xP9Q2lryEJt0d8G7lJTI890xRgXqenS1sg03TAmRLWfmgaaGgxxcfn5IZ9gzJBpqu0XnDCWYq7V
+        0TZ4YMxT7FZjp3B5s2q9xFiAEy7sE834y9jP/rC+Qv5dRQUD/ZAG6E/BznsLVVoImLyS3SAU+qNQwb/p
+        aj46It+ga+GUfXm9sIUAfwK7OehP4TYN/RFjG7AnZwsB/hFxhQA7zwn9OoarmTKsF4EJYTNr0V3krxCs
+        9+f7vAATk/OiOYsw+gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnRevenueTrendIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAARZJREFUSEvt
+        kz1OA0EMhVNRIJocgJaWEomahgoapIgu9trLhgtQIlGk5hgUXAA6JDruQEPJz3hCP2jDmoiHkJKdKfNJ
+        bp7fjsf2zmCwpiSslkgtoV6MtkAbqGczGr9tk9qrd8BqUSTuo68XVAX2m2NUGqfoXxnWMD+MJBy4Nlbb
+        Kzau/w4itXPUeuEFVNMm5orAYg/dYlOldj+ZpC30ZMNqT96JFyP9vEBfNqR27QXa5ZPaM3qKIBJ3fjqq
+        P3YxXwTWeNx1cou5pWGxu/koarvBHIkdfr8Pe8Tc0pxcpo1u1onFrlxvmjD0EVV1PPr91YqwvI8Wi/0T
+        M/T34rQJw0rjy+JXDUYyO0NfNv4OUC+Gd4D6miy+AM0I1TnX97dvAAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>
