@@ -1004,7 +1004,8 @@ namespace YugiohShop
             int orderCode = (int)DateTimeOffset.Now.ToUnixTimeSeconds();
             string description = "YGO " + orderCode.ToString();
 
-            PayOSClient payOS = new PayOSClient("53afb4a2-7ebf-45f3-b0ec-c83bb456ba18", "11ddd648-e0e7-42bc-9dc1-740a9b8257c3", "44d4ae3970a346056f6564fb63b076d2bf806438c21c9052986d7848a854d1e3");
+            //You can put your PayOS info here
+            PayOSClient payOS = new PayOSClient("ClientID", "APIKey", "ChecksumKey");
 
             try
             {
